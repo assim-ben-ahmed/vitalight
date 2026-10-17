@@ -1,0 +1,431 @@
+{
+  "version": "vl-2026.10.17-poisson",
+  "trainedAt": "2026-10-17T16:03:03+00:00",
+  "algorithm": "Log-linear Poisson regression per condition (scikit-learn PoissonRegressor)",
+  "explanation": "exp(coefficient) = relative risk of each factor; risk = exp(intercept + sum of active coefficients)",
+  "data": {
+    "source": "Simulated synthetic cohort (vitalight.simulate). No real patient data.",
+    "trainSize": 1500000,
+    "trainSampling": "exposure-enriched, importance-weighted back to population prevalence",
+    "testSize": 400000,
+    "testSampling": "population prevalence",
+    "seed": 7
+  },
+  "conditions": {
+    "asthma": {
+      "intercept": -2.740787,
+      "coefs": {
+        "m_asthma": 0.786438,
+        "f_asthma": 0.60108,
+        "par_eczema": 0.295384,
+        "fh_asthma": 0.124323,
+        "smoke_preg": 0.366262,
+        "smoke_home": 0.177163,
+        "gdm": 0.077847,
+        "ivf": 0.009844
+      },
+      "cap": 0.6
+    },
+    "eczema": {
+      "intercept": -2.032091,
+      "coefs": {
+        "m_eczema": 0.662136,
+        "f_eczema": 0.494129,
+        "par_asthma": 0.179323,
+        "fh_eczema": 0.093896,
+        "smoke_preg": -0.017955,
+        "ivf": -0.010157
+      },
+      "cap": 0.6
+    },
+    "t1d": {
+      "intercept": -5.631935,
+      "coefs": {
+        "f_t1d": 2.700231,
+        "m_t1d": 1.341605,
+        "fh_t1d": 0.694141,
+        "gdm": 0.160852,
+        "ivf": 0.095442
+      },
+      "cap": 0.3
+    },
+    "chd": {
+      "intercept": -4.893159,
+      "coefs": {
+        "m_chd": 1.530613,
+        "f_chd": 0.803204,
+        "mat_diabetes": 1.312962,
+        "consanguinity": 0.787939,
+        "fh_chd": 0.383291,
+        "ivf": 0.414026,
+        "smoke_preg": 0.204514,
+        "gdm": 0.081073,
+        "mat_age_40": 0.282955
+      },
+      "cap": 0.25
+    }
+  },
+  "metrics": {
+    "asthma": {
+      "positivesTrain": 160742,
+      "positivesTest": 36328,
+      "model": {
+        "auc": 0.6019,
+        "brier": 0.081049,
+        "logLoss": 0.29711,
+        "meanPredicted": 0.09115,
+        "observedRate": 0.09082
+      },
+      "logistic": {
+        "auc": 0.6019,
+        "brier": 0.081069,
+        "logLoss": 0.29717,
+        "meanPredicted": 0.0911,
+        "observedRate": 0.09082
+      },
+      "gradientBoosting": {
+        "auc": 0.6019,
+        "brier": 0.081045,
+        "logLoss": 0.2971,
+        "meanPredicted": 0.09127,
+        "observedRate": 0.09082
+      },
+      "rules": {
+        "auc": 0.6014,
+        "brier": 0.081364,
+        "logLoss": 0.29887,
+        "meanPredicted": 0.10799,
+        "observedRate": 0.09082
+      },
+      "oracle": {
+        "auc": 0.6527,
+        "brier": 0.079712,
+        "logLoss": 0.29043,
+        "meanPredicted": 0.0911,
+        "observedRate": 0.09082
+      },
+      "calibration": [
+        {
+          "predicted": 0.06452,
+          "observed": 0.0651
+        },
+        {
+          "predicted": 0.06452,
+          "observed": 0.064
+        },
+        {
+          "predicted": 0.06481,
+          "observed": 0.06432
+        },
+        {
+          "predicted": 0.07212,
+          "observed": 0.0743
+        },
+        {
+          "predicted": 0.07692,
+          "observed": 0.07842
+        },
+        {
+          "predicted": 0.07794,
+          "observed": 0.07858
+        },
+        {
+          "predicted": 0.08658,
+          "observed": 0.08478
+        },
+        {
+          "predicted": 0.09649,
+          "observed": 0.09607
+        },
+        {
+          "predicted": 0.12402,
+          "observed": 0.12018
+        },
+        {
+          "predicted": 0.18355,
+          "observed": 0.18245
+        }
+      ],
+      "relativeRisks": {
+        "m_asthma": 2.196,
+        "f_asthma": 1.824,
+        "par_eczema": 1.344,
+        "fh_asthma": 1.132,
+        "smoke_preg": 1.442,
+        "smoke_home": 1.194,
+        "gdm": 1.081,
+        "ivf": 1.01
+      }
+    },
+    "eczema": {
+      "positivesTrain": 264376,
+      "positivesTest": 63114,
+      "model": {
+        "auc": 0.5786,
+        "brier": 0.130365,
+        "logLoss": 0.4278,
+        "meanPredicted": 0.15829,
+        "observedRate": 0.15779
+      },
+      "logistic": {
+        "auc": 0.5786,
+        "brier": 0.130387,
+        "logLoss": 0.42785,
+        "meanPredicted": 0.15835,
+        "observedRate": 0.15779
+      },
+      "gradientBoosting": {
+        "auc": 0.5786,
+        "brier": 0.130358,
+        "logLoss": 0.42779,
+        "meanPredicted": 0.1582,
+        "observedRate": 0.15779
+      },
+      "rules": {
+        "auc": 0.5787,
+        "brier": 0.130807,
+        "logLoss": 0.42939,
+        "meanPredicted": 0.17872,
+        "observedRate": 0.15779
+      },
+      "oracle": {
+        "auc": 0.647,
+        "brier": 0.126685,
+        "logLoss": 0.41549,
+        "meanPredicted": 0.15738,
+        "observedRate": 0.15779
+      },
+      "calibration": [
+        {
+          "predicted": 0.13015,
+          "observed": 0.13093
+        },
+        {
+          "predicted": 0.13106,
+          "observed": 0.12953
+        },
+        {
+          "predicted": 0.13106,
+          "observed": 0.13175
+        },
+        {
+          "predicted": 0.13106,
+          "observed": 0.1322
+        },
+        {
+          "predicted": 0.13106,
+          "observed": 0.128
+        },
+        {
+          "predicted": 0.13658,
+          "observed": 0.1369
+        },
+        {
+          "predicted": 0.14468,
+          "observed": 0.14647
+        },
+        {
+          "predicted": 0.15677,
+          "observed": 0.15545
+        },
+        {
+          "predicted": 0.2091,
+          "observed": 0.20747
+        },
+        {
+          "predicted": 0.28137,
+          "observed": 0.27915
+        }
+      ],
+      "relativeRisks": {
+        "m_eczema": 1.939,
+        "f_eczema": 1.639,
+        "par_asthma": 1.196,
+        "fh_eczema": 1.098,
+        "smoke_preg": 0.982,
+        "ivf": 0.99
+      }
+    },
+    "t1d": {
+      "positivesTrain": 34031,
+      "positivesTest": 1584,
+      "model": {
+        "auc": 0.5751,
+        "brier": 0.003924,
+        "logLoss": 0.02508,
+        "meanPredicted": 0.00417,
+        "observedRate": 0.00396
+      },
+      "logistic": {
+        "auc": 0.5746,
+        "brier": 0.003924,
+        "logLoss": 0.02507,
+        "meanPredicted": 0.00423,
+        "observedRate": 0.00396
+      },
+      "gradientBoosting": {
+        "auc": 0.5751,
+        "brier": 0.003923,
+        "logLoss": 0.02505,
+        "meanPredicted": 0.00416,
+        "observedRate": 0.00396
+      },
+      "rules": {
+        "auc": 0.5684,
+        "brier": 0.003924,
+        "logLoss": 0.0251,
+        "meanPredicted": 0.00462,
+        "observedRate": 0.00396
+      },
+      "oracle": {
+        "auc": 0.5752,
+        "brier": 0.003923,
+        "logLoss": 0.02505,
+        "meanPredicted": 0.00409,
+        "observedRate": 0.00396
+      },
+      "calibration": [
+        {
+          "predicted": 0.00358,
+          "observed": 0.00317
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.00335
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.0034
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.00347
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.00355
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.00335
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.00343
+        },
+        {
+          "predicted": 0.00358,
+          "observed": 0.0031
+        },
+        {
+          "predicted": 0.00397,
+          "observed": 0.00385
+        },
+        {
+          "predicted": 0.00912,
+          "observed": 0.00893
+        }
+      ],
+      "relativeRisks": {
+        "f_t1d": 14.883,
+        "m_t1d": 3.825,
+        "fh_t1d": 2.002,
+        "gdm": 1.175,
+        "ivf": 1.1
+      }
+    },
+    "chd": {
+      "positivesTrain": 53649,
+      "positivesTest": 3589,
+      "model": {
+        "auc": 0.5662,
+        "brier": 0.008869,
+        "logLoss": 0.05051,
+        "meanPredicted": 0.009,
+        "observedRate": 0.00897
+      },
+      "logistic": {
+        "auc": 0.5662,
+        "brier": 0.00887,
+        "logLoss": 0.05054,
+        "meanPredicted": 0.0089,
+        "observedRate": 0.00897
+      },
+      "gradientBoosting": {
+        "auc": 0.5661,
+        "brier": 0.008867,
+        "logLoss": 0.0505,
+        "meanPredicted": 0.00894,
+        "observedRate": 0.00897
+      },
+      "rules": {
+        "auc": 0.5586,
+        "brier": 0.008868,
+        "logLoss": 0.05052,
+        "meanPredicted": 0.00929,
+        "observedRate": 0.00897
+      },
+      "oracle": {
+        "auc": 0.5661,
+        "brier": 0.008867,
+        "logLoss": 0.05049,
+        "meanPredicted": 0.00899,
+        "observedRate": 0.00897
+      },
+      "calibration": [
+        {
+          "predicted": 0.0075,
+          "observed": 0.00745
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00737
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00762
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00707
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00885
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00792
+        },
+        {
+          "predicted": 0.0075,
+          "observed": 0.00725
+        },
+        {
+          "predicted": 0.00839,
+          "observed": 0.00845
+        },
+        {
+          "predicted": 0.01023,
+          "observed": 0.00925
+        },
+        {
+          "predicted": 0.01892,
+          "observed": 0.01847
+        }
+      ],
+      "relativeRisks": {
+        "m_chd": 4.621,
+        "f_chd": 2.233,
+        "mat_diabetes": 3.717,
+        "consanguinity": 2.199,
+        "fh_chd": 1.467,
+        "ivf": 1.513,
+        "smoke_preg": 1.227,
+        "gdm": 1.084,
+        "mat_age_40": 1.327
+      }
+    }
+  },
+  "geneticsNote": "Cystic fibrosis, sickle cell and trisomy 21 use exact Mendelian / maternal-age rules, not learned."
+}
