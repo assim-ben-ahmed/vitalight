@@ -2,7 +2,7 @@ import { AlertTriangle, ArrowRight, ClipboardCheck, PlusCircle, Users } from 'lu
 import { Link } from 'react-router-dom'
 import { Disclaimer, LevelBadge } from '../components/ui'
 import { fmtDate, useLang } from '../i18n'
-import { assess, CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
+import { resultsOf, CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
 import { useStore } from '../lib/store'
 
 const LEVELS: Level[] = ['low', 'moderate', 'elevated', 'high']
@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { t, tx, lang } = useLang()
   const d = t.dashboard
   const rows = families.map((f) => {
-    const results = assess(f)
+    const results = resultsOf(f)
     return { f, results, level: topLevel(results), flags: flagged(results) }
   })
 

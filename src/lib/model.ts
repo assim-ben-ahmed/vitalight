@@ -39,9 +39,17 @@ export interface Family {
   createdAt: string // ISO date
   dueDate: string // ISO date
   status: 'new' | 'pending' | 'reviewed'
+  consent?: boolean
   mother: ParentProfile
   father: ParentProfile
   pregnancy: Pregnancy
+  assessment?: Assessment // set when the file comes from the API
+}
+
+export interface Assessment {
+  modelVersion: string
+  createdAt: string
+  results: ConditionResult[]
 }
 
 export interface Factor {
@@ -57,6 +65,7 @@ export interface ConditionResult {
   level: Level
   factors: Factor[]
   recommendations: Text[]
+  method?: 'ml' | 'genetic' | 'rules' // ml = trained model served by the API
 }
 
 export interface ConditionMeta {
@@ -361,6 +370,11 @@ export function assess(f: Family): ConditionResult[] {
   }
 
   return out
+}
+
+// Results to display: the server's stored assessment when there is one, else the local engine (offline demo).
+export function resultsOf(f: Family): ConditionResult[] {
+  return f.assessment?.results ?? assess(f)
 }
 
 const LEVEL_RANK: Record<Level, number> = { low: 0, moderate: 1, elevated: 2, high: 3 }

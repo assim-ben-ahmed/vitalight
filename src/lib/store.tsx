@@ -1,7 +1,8 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { SEED_FAMILIES } from '../data/families'
 import { txt, type Text } from '../i18n/text'
-import { assess, CONDITIONS, flagged, type Family } from './model'
+import { api, ApiError, health, setToken, type FamilyInput, type Health, type User } from './api'
+import { CONDITIONS, flagged, resultsOf, type Family } from './model'
 import { clinicianAlerts, JUST_NOW, type Notif } from './notifications'
 
 export interface Toast {
@@ -11,11 +12,22 @@ export interface Toast {
   tone: 'info' | 'success' | 'alert'
 }
 
+// 'online': a VitaLight API answered, data lives in its database and a login is required.
+// 'offline': static hosting (e.g. GitHub Pages), the demo runs in the browser on synthetic families.
+export type Mode = 'checking' | 'online' | 'offline'
+
+const OFFLINE_USER: User = { email: 'demo', name: 'Dr. L. Moreau', initials: 'LM', role: '' }
+
 interface Store {
+  mode: Mode
+  server: Health | null
+  user: User | null
+  login: (email: string, password: string) => Promise<void>
+  logout: () => void
   families: Family[]
-  addFamily: (f: Family) => void
+  addFamily: (f: FamilyInput, localId: string) => Promise<string>
   getFamily: (id: string) => Family | undefined
-  markReviewed: (id: string) => void
+  markReviewed: (id: string) => Promise<void>
   alerts: Notif[]
   markAllRead: () => void
   toasts: Toast[]
@@ -27,8 +39,11 @@ const Ctx = createContext<Store | null>(null)
 let toastSeq = 0
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [families, setFamilies] = useState<Family[]>(SEED_FAMILIES)
-  const [alerts, setAlerts] = useState<Notif[]>(() => clinicianAlerts(SEED_FAMILIES))
+  const [mode, setMode] = useState<Mode>('checking')
+  const [server, setServer] = useState<Health | null>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [families, setFamilies] = useState<Family[]>([])
+  const [alerts, setAlerts] = useState<Notif[]>([])
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const dismissToast = useCallback((id: number) => setToasts((prev) => prev.filter((t) => t.id !== id)), [])
@@ -42,24 +57,107 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [dismissToast],
   )
 
+  const loadFamilies = useCallback((list: Family[]) => {
+    setFamilies(list)
+    setAlerts(clinicianAlerts(list))
+  }, [])
+
+  const startOnline = useCallback(async () => {
+    try {
+      const [me, list] = await Promise.all([api.me(), api.families()])
+      setUser(me)
+      loadFamilies(list)
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 401) {
+        setToken(null)
+        setUser(null)
+      } else throw e
+    }
+  }, [loadFamilies])
+
+  useEffect(() => {
+    let cancelled = false
+    health().then(async (h) => {
+      if (cancelled) return
+      if (!h) {
+        setMode('offline')
+        setUser(OFFLINE_USER)
+        loadFamilies(SEED_FAMILIES)
+        return
+      }
+      setServer(h)
+      if (api.hasToken()) await startOnline().catch(() => setUser(null))
+      if (!cancelled) setMode('online')
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [loadFamilies, startOnline])
+
   const pushAlert = useCallback((n: Notif) => setAlerts((prev) => [{ ...n, when: JUST_NOW, read: false }, ...prev]), [])
+
+  const failed = useCallback(
+    (e: unknown) =>
+      toast({
+        title: txt('The server refused the request', 'Le serveur a refusé la requête'),
+        body: txt(String((e as Error).message ?? e), String((e as Error).message ?? e)),
+        tone: 'alert',
+      }),
+    [toast],
+  )
 
   const store = useMemo<Store>(
     () => ({
+      mode,
+      server,
+      user,
+      login: async (email, password) => {
+        const { token } = await api.login(email, password)
+        setToken(token)
+        await startOnline()
+      },
+      logout: () => {
+        setToken(null)
+        setUser(null)
+        setFamilies([])
+        setAlerts([])
+      },
       families,
       getFamily: (id) => families.find((f) => f.id === id),
-      addFamily: (f) => {
+      addFamily: async (input, localId) => {
+        let f: Family
+        if (mode === 'online') {
+          try {
+            f = await api.createFamily(input)
+          } catch (e) {
+            failed(e)
+            throw e
+          }
+        } else {
+          f = { ...input, id: localId, createdAt: new Date().toISOString().slice(0, 10), status: 'pending' }
+        }
         setFamilies((prev) => [f, ...prev])
-        const top = flagged(assess(f))[0]
+        const top = flagged(resultsOf(f))[0]
         const body = top
           ? txt(`Top flag: ${CONDITIONS[top.id].name.en}.`, `Signalement principal : ${CONDITIONS[top.id].name.fr}.`)
           : txt('No condition flagged above baseline.', 'Aucune affection signalée au-dessus de la référence.')
         const title = txt(`Prediction ready: ${f.name} family`, `Prédiction prête : famille ${f.name}`)
         pushAlert({ id: `c-new-${f.id}`, kind: 'result', familyId: f.id, title, body })
         toast({ title, body, tone: 'info' })
+        return f.id
       },
-      markReviewed: (id) => {
-        setFamilies((prev) => prev.map((f) => (f.id === id ? { ...f, status: 'reviewed' } : f)))
+      markReviewed: async (id) => {
+        if (mode === 'online') {
+          try {
+            const updated = await api.review(id)
+            setFamilies((prev) => prev.map((f) => (f.id === id ? updated : f)))
+          } catch (e) {
+            failed(e)
+            return
+          }
+        } else {
+          setFamilies((prev) => prev.map((f) => (f.id === id ? { ...f, status: 'reviewed' } : f)))
+        }
         setAlerts((prev) => prev.filter((n) => n.id !== `c-review-${id}`))
         const name = families.find((x) => x.id === id)?.name ?? ''
         toast({
@@ -77,7 +175,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       toast,
       dismissToast,
     }),
-    [families, alerts, toasts, toast, dismissToast, pushAlert],
+    [mode, server, user, families, alerts, toasts, toast, dismissToast, pushAlert, startOnline, failed],
   )
 
   return <Ctx.Provider value={store}>{children}</Ctx.Provider>
@@ -90,6 +188,6 @@ export function useStore() {
 }
 
 export function nextId(families: Family[]) {
-  const max = Math.max(...families.map((f) => Number(f.id.split('-')[1]) || 0))
+  const max = Math.max(1000, ...families.map((f) => Number(f.id.split('-')[1]) || 0))
   return `VL-${max + 1}`
 }

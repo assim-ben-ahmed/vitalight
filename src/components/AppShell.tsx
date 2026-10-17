@@ -1,6 +1,8 @@
-import { BookHeart, LayoutDashboard, PlusCircle, Search, Settings, Users } from 'lucide-react'
+import { BookHeart, LayoutDashboard, LogOut, PlusCircle, Search, Settings, Users } from 'lucide-react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { LangSwitch, useLang } from '../i18n'
+import { useStore } from '../lib/store'
+import Login from '../pages/Login'
 import { NotificationBell, Toasts } from './notifications'
 import { Logo } from './ui'
 
@@ -8,6 +10,10 @@ export default function AppShell() {
   const { pathname } = useLocation()
   const { t } = useLang()
   const isParent = pathname.startsWith('/app/parent')
+  const { mode, server, user, logout } = useStore()
+
+  if (mode === 'checking') return <div className="login muted">{t.shell.checking}</div>
+  if (!user) return <Login />
 
   const nav = [
     { to: '/app', label: t.shell.dashboard, icon: LayoutDashboard, end: true },
@@ -35,8 +41,8 @@ export default function AppShell() {
             <Settings size={18} />
             <span>{t.shell.settings}</span>
           </div>
-          <div className="azure-chip">
-            <span className="dot" /> Azure · France Central
+          <div className={`azure-chip${mode === 'offline' ? ' offline' : ''}`} title={server?.version}>
+            <span className="dot" /> {mode === 'online' && server ? t.shell.online(server.model) : t.shell.offline}
           </div>
         </div>
       </aside>
@@ -52,12 +58,17 @@ export default function AppShell() {
             <LangSwitch />
             <NotificationBell />
             <div className="user">
-              <span className="avatar">LM</span>
+              <span className="avatar">{user.initials}</span>
               <span className="user-meta">
-                <strong>Dr. L. Moreau</strong>
-                <small>{t.shell.role}</small>
+                <strong>{user.name}</strong>
+                <small>{user.role || t.shell.role}</small>
               </span>
             </div>
+            {mode === 'online' && (
+              <button className="icon-btn" onClick={logout} title={t.shell.logout} aria-label={t.shell.logout}>
+                <LogOut size={18} />
+              </button>
+            )}
           </div>
         </header>
         <main className="content">

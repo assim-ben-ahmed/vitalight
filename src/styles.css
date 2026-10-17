@@ -398,6 +398,22 @@ p { margin: 6px 0 0; line-height: 1.55; }
 .push-demo-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
 /* ---------- Responsive ---------- */
+/* Sign-in, connection status, model provenance */
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; }
+.login-card { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+.login-card h1 { font-size: 24px; margin: 0; color: var(--navy); }
+.login-card p { margin: 0; display: flex; gap: 6px; align-items: flex-start; }
+.login-card .btn { justify-content: center; }
+.login-head { display: flex; justify-content: space-between; align-items: center; }
+.login-error { color: var(--high); font-size: 13px; font-weight: 600; margin: 0; }
+.login-demo { display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; }
+.azure-chip.offline .dot { background: var(--moderate); box-shadow: 0 0 0 3px rgba(224,177,0,0.18); }
+.check.consent-check { align-self: stretch; }
+.check.consent-check.missing { border-color: var(--elevated); }
+.consent-warn { grid-column: 1 / -1; color: var(--elevated); font-size: 13px; font-weight: 600; margin: 0; }
+.method { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); background: #f4f7fb; border-radius: 999px; padding: 4px 10px; margin-top: 12px; }
+.model-line { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
 @media (max-width: 1100px) {
   .report-grid, .dash-grid, .guide-layout { grid-template-columns: 1fr; }
   .detail { position: static; }

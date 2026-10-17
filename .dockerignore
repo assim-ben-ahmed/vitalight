@@ -1,0 +1,8 @@
+node_modules
+dist
+screenshots
+**/__pycache__
+**/.pytest_cache
+*.db
+.git
+e2e-failure.png

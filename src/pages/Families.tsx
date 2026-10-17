@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LevelBadge } from '../components/ui'
 import { fmtDate, useLang } from '../i18n'
-import { assess, CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
+import { resultsOf, CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
 import { useStore } from '../lib/store'
 
 const FILTERS: ('all' | Level)[] = ['all', 'high', 'elevated', 'moderate', 'low']
@@ -14,7 +14,7 @@ export default function Families() {
 
   const rows = families
     .map((f) => {
-      const results = assess(f)
+      const results = resultsOf(f)
       return { f, level: topLevel(results), flags: flagged(results) }
     })
     .filter((r) => filter === 'all' || r.level === filter)

@@ -16,7 +16,7 @@ import { KindIcon } from '../components/notifications'
 import { Logo } from '../components/ui'
 import { CATEGORY_SHORT, GUIDE, type GuideCategory } from '../data/guide'
 import { useLang } from '../i18n'
-import { assess, CONDITIONS, flagged, type Family } from '../lib/model'
+import { resultsOf, CONDITIONS, flagged, type Family } from '../lib/model'
 import { nextPush, parentInbox, type Notif } from '../lib/notifications'
 import { useStore } from '../lib/store'
 
@@ -25,7 +25,7 @@ type Tab = 'home' | 'guide' | 'inbox'
 function HomeTab({ f, week, latestTip }: { f: Family; week: number; latestTip?: Notif }) {
   const { t, tx } = useLang()
   const pt = t.parent
-  const results = assess(f)
+  const results = resultsOf(f)
   const flags = flagged(results)
   // "Moderate" is not alarming for parents: count it with the calm ones.
   const calm = results.filter((r) => r.level === 'low' || r.level === 'moderate').length

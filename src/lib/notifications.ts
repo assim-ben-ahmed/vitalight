@@ -7,7 +7,7 @@
 
 import { GUIDE } from '../data/guide'
 import { fmtRR, txt, type Text } from '../i18n/text'
-import { assess, CONDITIONS, flagged, topLevel, type Family } from './model'
+import { resultsOf, CONDITIONS, flagged, topLevel, type Family } from './model'
 
 export type NotifKind = 'eat' | 'avoid' | 'habits' | 'reminder' | 'personal' | 'alert' | 'result'
 
@@ -104,7 +104,7 @@ const BASE_SCHEDULE: Notif[] = [
 function personal(f: Family): Notif[] {
   const out: Notif[] = []
   const w = Math.max(5, f.pregnancy.weeks - 1)
-  const flags = flagged(assess(f))
+  const flags = flagged(resultsOf(f))
   const add = (id: string, week: number, title: Text, body: Text) =>
     out.push({ id, kind: 'personal', week, title, body })
 
@@ -217,7 +217,7 @@ export const JUST_NOW = txt('Just now', 'À l’instant')
 export function clinicianAlerts(families: Family[]): Notif[] {
   const out: Notif[] = []
   for (const f of families) {
-    const results = assess(f)
+    const results = resultsOf(f)
     if (f.status === 'pending') {
       out.push({
         id: `c-review-${f.id}`,

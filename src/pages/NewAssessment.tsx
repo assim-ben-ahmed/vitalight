@@ -21,6 +21,7 @@ function blank(id: string): Family {
     createdAt: today,
     dueDate: '2027-04-15',
     status: 'new',
+    consent: false,
     mother: emptyParent(30),
     father: emptyParent(32),
     pregnancy: {
@@ -105,30 +106,50 @@ function ParentForm({ ageLabel, p, set }: { ageLabel: string; p: ParentProfile; 
 }
 
 export default function NewAssessment() {
-  const { families, addFamily } = useStore()
+  const { families, addFamily, user } = useStore()
   const { t, tx } = useLang()
   const fm = t.form
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
-  const [f, setF] = useState<Family>(() => blank(nextId(families)))
+  const [f, setF] = useState<Family>(() => ({ ...blank(nextId(families)), clinician: user?.name ?? 'Dr. L. Moreau' }))
   const [running, setRunning] = useState(false)
+  const [triedRun, setTriedRun] = useState(false)
 
   const loadExample = () =>
     setF({
       ...f,
       name: 'Garnier',
       dueDate: '2027-04-10',
+      consent: true,
       mother: { age: 38, conditions: ['asthma'], carriers: [], familyHistory: ['t1d'], smoker: false },
       father: { age: 40, conditions: ['t1d'], carriers: ['cf'], familyHistory: [], smoker: true },
       pregnancy: { ...f.pregnancy, weeks: 13, ivf: true },
     })
 
-  const run = () => {
+  const run = async () => {
+    if (!f.consent) {
+      setTriedRun(true)
+      setStep(0)
+      return
+    }
     setRunning(true)
-    setTimeout(() => {
-      addFamily({ ...f, name: f.name || t.common.unnamed })
-      navigate(`/app/report/${f.id}`)
-    }, 1600)
+    const input = {
+      name: f.name || t.common.unnamed,
+      clinician: f.clinician,
+      dueDate: f.dueDate,
+      consent: f.consent,
+      mother: f.mother,
+      father: f.father,
+      pregnancy: f.pregnancy,
+    }
+    // Keep the analysing screen up for a moment even when the API answers instantly.
+    const pause = new Promise((r) => setTimeout(r, 1200))
+    try {
+      const [id] = await Promise.all([addFamily(input, f.id), pause])
+      navigate(`/app/report/${id}`)
+    } catch {
+      setRunning(false)
+    }
   }
 
   const p = f.pregnancy
@@ -171,12 +192,14 @@ export default function NewAssessment() {
               <span>{fm.clinician}</span>
               <input value={f.clinician} onChange={(e) => setF({ ...f, clinician: e.target.value })} />
             </label>
-            <label className="field">
+            <div className="field">
               <span>{fm.consent}</span>
-              <div className="consent">
-                <Check size={16} /> {fm.consentText}
-              </div>
-            </label>
+              <label className={`check consent-check${triedRun && !f.consent ? ' missing' : ''}`}>
+                <input type="checkbox" checked={!!f.consent} onChange={() => setF({ ...f, consent: !f.consent })} />
+                <span>{fm.consentText}</span>
+              </label>
+            </div>
+            {triedRun && !f.consent && <p className="consent-warn">{fm.consentNeeded}</p>}
           </div>
         )}
         {step === 1 && <ParentForm ageLabel={fm.motherAge} p={f.mother} set={(m) => setF({ ...f, mother: m })} />}

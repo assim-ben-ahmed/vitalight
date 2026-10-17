@@ -1,9 +1,9 @@
-import { ArrowLeft, CheckCircle2, Info, Printer, Smartphone, Sparkles } from 'lucide-react'
+import { ArrowLeft, BrainCircuit, CheckCircle2, Dna, Info, Printer, Smartphone, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Disclaimer, FactorBars, LevelBadge, RiskRing } from '../components/ui'
 import { fmtDate, fmtRisk, fmtRR, useLang } from '../i18n'
-import { assess, completeness, CONDITIONS, flagged, topLevel, type ConditionId, type ParentProfile } from '../lib/model'
+import { resultsOf, completeness, CONDITIONS, flagged, topLevel, type ConditionId, type ParentProfile } from '../lib/model'
 import { useStore } from '../lib/store'
 
 function ParentSummary({ who, p }: { who: string; p: ParentProfile }) {
@@ -49,7 +49,7 @@ export default function Report() {
     )
   }
 
-  const results = assess(f)
+  const results = resultsOf(f)
   const flags = flagged(results)
   const level = topLevel(results)
   const current = results.find((x) => x.id === (selected ?? flags[0]?.id ?? results[0].id))!
@@ -69,6 +69,11 @@ export default function Report() {
             {t.common.familyOf(f.name)} <LevelBadge level={level} />
           </h1>
           <p className="muted">{r.meta(f.id, f.pregnancy.weeks, fmtDate(f.dueDate, lang), f.clinician)}</p>
+          <p className="model-line">
+            {f.assessment
+              ? r.modelLine(f.assessment.modelVersion, fmtDate(f.assessment.createdAt.slice(0, 10), lang))
+              : r.localModel}
+          </p>
         </div>
         <div className="head-actions">
           <Link to={`/app/parent/${f.id}`} className="btn btn-ghost">
@@ -148,6 +153,11 @@ export default function Report() {
           <p className="about">
             <Info size={14} /> {tx(meta.about)}
           </p>
+
+          <span className="method">
+            {current.method === 'genetic' ? <Dna size={14} /> : <BrainCircuit size={14} />}
+            {r.method[current.method ?? 'rules']}
+          </span>
 
           <h3>{r.why}</h3>
           <FactorBars factors={current.factors} />

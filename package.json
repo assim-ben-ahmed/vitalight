@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "api": "python -m uvicorn --app-dir api vitalight.main:app --reload --port 8000",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "test": "cd api && python -m pytest -q",
+    "train": "cd api && python -m vitalight.train",
+    "golden": "node scripts/export-golden.mjs",
     "screenshots": "node scripts/screenshots.mjs"
   },
   "dependencies": {

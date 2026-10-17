@@ -1,75 +1,175 @@
-# VitaLight — demo prototype
+# VitaLight
 
-**Illuminating Future Health.** A clickable demo of VitaLight, the preventive-health concept for Microsoft Imagine
-Cup 2025. Clinicians enter both parents' medical history, and the app estimates newborn health risks with an
-explanation for each one.
+**Illuminating Future Health.** VitaLight, the preventive-health concept from Microsoft Imagine Cup 2025, built
+out as a working system. Clinicians enter both parents' medical history. A Python API stores the file, runs a
+trained model, and returns newborn health-risk estimates with an explanation for each one. A parent app then
+turns the report into plain language and a weekly pregnancy guide.
 
-> Synthetic data only. Risk figures are illustrative orders of magnitude, not a diagnosis and not a medical device.
+> Synthetic data only. Risk figures are illustrative orders of magnitude, not a diagnosis and not a medical
+> device.
+
+```
+ React + TypeScript (Vite)                 FastAPI (Python)                         SQLite / PostgreSQL
+ ┌──────────────────────────┐   /api   ┌──────────────────────────────────┐    ┌──────────────────────┐
+ │ clinician app, parent app│ ───────▶ │ auth · consent · audit log       │ ─▶ │ families, assessments│
+ │ EN/FR, offline fallback  │          │ trained model (multifactorial)   │    │ users, audit_log     │
+ └──────────────────────────┘          │ exact genetic rules (CF, SCD, T21)│    └──────────────────────┘
+                                       └──────────────────────────────────┘
+```
 
 ## Run it
 
+Prerequisites: Node 22 and Python 3.11.
+
 ```bash
 npm install
-npm run dev          # http://localhost:5180
-npm run screenshots  # with the dev server running: screenshots/en and screenshots/fr (2880x1800)
-# LANGS=fr npm run screenshots   -> one language only
-npm run build        # static site in dist/ (relative paths, works on GitHub Pages)
+pip install -r api/requirements-dev.txt
+
+# Option A: development (hot reload, two terminals)
+npm run api          # FastAPI on http://127.0.0.1:8000 (API docs at /docs)
+npm run dev          # http://localhost:5180, /api is proxied to the Python server
+
+# Option B: the whole system in one process
+npm run build && npm run api      # open http://127.0.0.1:8000
+
+# Option C: Docker (one container, data in a volume)
+docker build -t vitalight .
+docker run -p 8000:8000 -v vitalight-data:/data -e VITALIGHT_SECRET=change-me vitalight
 ```
+
+Demo sign-in: `l.moreau@vitalight.demo`, `s.haddad@vitalight.demo` or `a.petit@vitalight.demo`, password
+`vitalight-demo`. The database is created and seeded with 8 fictional families on first start.
+
+**Offline mode.** When no API answers (for example on GitHub Pages), the frontend runs the original in-browser
+demo on the same synthetic families. The sidebar chip shows which mode is active.
+
+## Checks
+
+```bash
+npm test             # 26 API, model and parity tests (pytest)
+npm run golden       # re-export the TypeScript engine's outputs used by the parity test
+node scripts/e2e.mjs # browser test of the full system (needs the server on :8000)
+npm run typecheck
+```
+
+The end-to-end test signs in, opens a report from the trained model, creates a family, reviews it, reloads to
+confirm it was saved, and checks that the form blocks a run without parental consent.
+
+## The model
+
+Each condition uses the method that fits its biology:
+
+| Conditions | Method | Why |
+|---|---|---|
+| Asthma, atopic eczema, type 1 diabetes, congenital heart defect | **Trained model**: log-linear Poisson regression (scikit-learn) | Multifactorial: effect sizes have to be estimated from data |
+| Cystic fibrosis, sickle cell disease | **Genetic rules**: carrier probabilities, 1 in 4 when both parents carry | Mendelian inheritance is exact; learning it would only add noise |
+| Trisomy 21 | **Genetic rules**: maternal-age table | Known actuarial relationship |
+
+**Why Poisson regression.** For binary outcomes, "modified Poisson" regression is a standard epidemiology
+method. Its exp(coefficient) is directly a relative risk, which is exactly what the report's factor bars show.
+The explanation is therefore the model itself, not a post-hoc approximation.
+
+**Training data.** No real patient data exists for this project, so `vitalight/simulate.py` generates a
+synthetic cohort. Its "ground truth" is deliberately richer than anything the model can see: interactions
+(two atopic parents, diabetes × heart defect), unobserved family-level variation, and weak effects that the
+hand-written rules ignore. Rare exposures are over-sampled to 15% and importance-weighted back to population
+prevalence. Without the weights, strong co-occurring factors hit the risk caps far too often and the rare
+conditions came out over-predicted by about 40%.
+
+**Results** on a held-out cohort of 400,000 families at population prevalence (`api/models/vitalight-model.json`,
+also served at `GET /api/model`):
+
+| Condition | AUC model | AUC rules | AUC oracle* | Mean predicted vs observed |
+|---|---|---|---|---|
+| Asthma | 0.602 | 0.601 | 0.653 | 9.1% vs 9.1% |
+| Eczema | 0.579 | 0.579 | 0.647 | 15.8% vs 15.8% |
+| Type 1 diabetes | 0.575 | 0.568 | 0.575 | 0.42% vs 0.40% |
+| Heart defect | 0.566 | 0.559 | 0.566 | 0.90% vs 0.90% |
+
+\* The oracle is the true simulated risk, an upper bound no model can beat.
+
+How to read this honestly:
+- **Discrimination is modest for every method, including the oracle.** Parental history explains only a small
+  part of who gets these conditions. That is the real clinical picture, and it is why VitaLight presents risk
+  levels and follow-up suggestions, not predictions.
+- **The model matches the oracle for T1D and heart defects and is well calibrated everywhere.** For asthma and
+  eczema the remaining gap is the unobserved family-level factor, which no model built on this input can recover.
+- **Gradient boosting and logistic regression score the same** (see the model card), so the explainable
+  model costs nothing in accuracy.
+- **Known limits:** it is a main-effects model, so it misses the diabetes × heart-defect interaction. The
+  mother-with-T1D effect is underestimated (×3.8 vs ×7 simulated) because only 0.5% of mothers have T1D. And
+  every number comes from a simulation, so external validation on a real cohort is the next step.
+
+Retrain with `npm run train`. It takes about a minute and writes a new versioned artifact. Stored assessments
+keep the model version that produced them, and `POST /api/families/{id}/reassess` reruns a file on the
+current model.
+
+## API
+
+| Method & path | What it does |
+|---|---|
+| `GET /api/health` | Status, model version, engine in use |
+| `POST /api/auth/login` | Email and password → bearer token (12 h) |
+| `GET /api/model` | Model card: training data, metrics vs benchmarks, calibration, learned relative risks |
+| `GET /api/families` · `GET /api/families/{id}` | Files with their latest assessment |
+| `POST /api/families` | Create and assess a file (**rejected without parental consent**) |
+| `POST /api/families/{id}/review` | Mark as reviewed, which shares the report with the parents |
+| `POST /api/families/{id}/reassess` | Rerun the current model, keeping the history |
+| `DELETE /api/families/{id}` | Right to erasure (GDPR art. 17) |
+| `POST /api/assess` | What-if assessment, nothing stored |
+| `GET /api/audit` | Access log: who read, created, reviewed or deleted what, and when |
+
+Interactive docs: `/docs`. Configuration is through environment variables: `VITALIGHT_DB` (SQLAlchemy URL),
+`VITALIGHT_SECRET` (token signing key; set it in production), `VITALIGHT_CORS`, `VITALIGHT_SEED`,
+`VITALIGHT_DEMO_PASSWORD`, plus `VITE_API_URL` at frontend build time when the API runs on another host.
 
 ## Screens
 
 | Route | What it shows |
 |---|---|
 | `#/` | Landing page: problem, how it works, technology |
-| `#/app` | Clinician dashboard: KPIs, recent assessments, cohort by attention level |
+| `#/app` | Clinician dashboard: KPIs, recent assessments, cohort by attention level (sign-in required when online) |
 | `#/app/families` | Family files with level filter |
-| `#/app/new` | 5-step assessment form ("Fill with example" for demos), then the prediction runs |
-| `#/app/report/:id` | Risk report: 7 conditions, risk vs. population baseline, factor breakdown, follow-up |
-| `#/app/parent/:id` | Parent mobile app: report in plain language, pregnancy guide, notification inbox, push demo |
+| `#/app/new` | 5-step assessment form with consent checkbox ("Fill with example" for demos) |
+| `#/app/report/:id` | Risk report: 7 conditions, risk vs. baseline, factor breakdown, method and model version, follow-up |
+| `#/app/parent/:id` | Parent mobile app: plain-language report, pregnancy guide, notification inbox, push demo |
 | `#/app/guide` | Pregnancy guide (eat well / avoid / habits, with sources) and the weekly push schedule |
-
-The bell in the top bar is the clinician notification centre; toasts appear when a prediction is ready or a
-report is shared with the parents.
-
-## Languages
-
-The app is bilingual, with English by default. The EN/FR switch sits in the top bar and on the landing page, and
-the choice is saved in localStorage (`vitalight-lang`).
-- Interface text: `src/i18n/strings.ts`. TypeScript checks that `fr` has exactly the same keys as `en`.
-- Medical content (conditions, risk factors, recommendations, guide, notifications) stores both languages
-  side by side as `{ en, fr }`, so a translation can't get out of sync with its source.
-- Numbers, percentages and dates follow each language's conventions (2.5 / 2,5 · 25% / 25 % · 1 in 2,500 / 1 sur 2 500).
 
 ## Structure
 
 ```
+api/
+  vitalight/main.py      routes, static frontend hosting
+  vitalight/engine.py    reference rules (exact port of src/lib/model.ts) + genetics
+  vitalight/features.py  model features, shared by training and serving
+  vitalight/simulate.py  synthetic cohort ("ground truth")
+  vitalight/train.py     training, benchmarks, model card
+  vitalight/ml.py        serving: JSON artifact -> ConditionResult[]
+  vitalight/db.py        SQLAlchemy models, audit helper
+  vitalight/auth.py      PBKDF2 passwords, HMAC-signed tokens
+  vitalight/seed.py      demo accounts and families
+  models/                versioned model artifact (JSON, no pickle)
+  tests/                 API, model and parity tests
 src/
-  lib/model.ts       risk engine: Family -> ConditionResult[] (the one thing to swap for a real model)
-  lib/store.tsx      in-memory state (families, clinician alerts, toasts)
-  lib/notifications.ts  push schedule by gestational week + personalised and clinician notifications
-  data/guide.ts      pregnancy guide content, each item with its source
-  i18n/              language provider, EN/FR switch, UI strings, number/date formatting
-  data/families.ts   8 fictional families
-  components/        app shell, risk ring, factor bars, badges
-  pages/             one file per screen
-scripts/screenshots.mjs  portfolio screenshots via installed Edge/Chrome
+  lib/api.ts             API client, health probe
+  lib/store.tsx          online/offline state, auth, families, alerts, toasts
+  lib/model.ts           in-browser engine (offline mode) and shared types
+  pages/                 one file per screen, plus Login
+  i18n/                  EN/FR strings (TypeScript checks both have the same keys)
+scripts/
+  e2e.mjs                full-system browser test
+  export-golden.mjs      TypeScript engine outputs for the parity test
+  screenshots.mjs        portfolio screenshots (2880x1800, EN and FR)
 ```
 
-## How the demo model works
+## Languages
 
-Each condition starts from a population baseline and is multiplied by a relative risk for each factor in the
-family file (parental diagnosis, family history, pregnancy context). Recessive conditions (cystic fibrosis,
-sickle cell) use carrier probabilities: 1 in 4 when both parents are carriers. Trisomy 21 follows maternal age.
-Every factor stays visible in the report, which keeps the result explainable.
+English by default, with the EN/FR switch in the top bar, on the landing page and on the sign-in screen. Medical
+content stores both languages side by side as `{ en, fr }`, and the API returns the same bilingual labels.
+Numbers, percentages and dates follow each language's conventions.
 
-## Pregnancy guide and notifications
+## Research behind the guide
 
-Parents get one push a week, keyed to the gestational week: something to eat, avoid or check. Food-safety
-content follows the NHS guidance, and nutrition content follows the research below. Extra pushes are written
-from the family file, such as smoking, diabetes, genetic counselling or maternal age. In the demo, the
-"Send next push" button plays the schedule, and "Also show in my browser" sends a real browser notification.
-
-Research behind the guide:
 - Marshall NE et al. *The importance of nutrition in pregnancy and lactation: lifelong consequences.*
   Am J Obstet Gynecol 2022;226(5):607–632. https://doi.org/10.1016/j.ajog.2021.12.035
 - Koletzko B et al. *Nutrition during pregnancy, lactation and early childhood and its implications for maternal
@@ -80,14 +180,13 @@ Research behind the guide:
 - WHO (2016). *Recommendations on antenatal care for a positive pregnancy experience.*
 - NHS. *Foods to avoid in pregnancy.* https://www.nhs.uk/pregnancy/keeping-well/foods-to-avoid/
 
-## Roadmap (next sessions)
+## Still to do
 
-1. **Python API:** FastAPI service exposing `POST /assess` with the same contract as `lib/model.ts`.
-2. **Real model:** scikit-learn / gradient boosting trained on a public or synthetic cohort, with calibration
-   and SHAP values replacing the hand-written factors.
-3. **Data and privacy:** FHIR-style input schema, consent flow, audit log, HDS-certified hosting (Azure France).
-4. **Real push:** service worker + Web Push for the web app (Azure Notification Hubs or Firebase for mobile),
-   with a backend job that sends the weekly schedule and lets parents set quiet hours.
-5. **Parent app:** dedicated mobile layout, FR/EN, guide content checked against French guidance
-   (Santé publique France).
-6. **Deploy** the demo (GitHub Pages or Azure Static Web Apps) and link it from the portfolio.
+1. **Real push notifications:** service worker + Web Push (or Azure Notification Hubs), with a backend job
+   that sends the weekly schedule. The schedule logic exists; today the demo plays it in the UI.
+2. **Parent accounts:** parents currently see their report through the clinician's "Parent view". They need
+   their own sign-in, scoped to their file.
+3. **Production identity and hosting:** Microsoft Entra ID instead of the built-in login, PostgreSQL,
+   HDS-certified hosting (Azure France Central), and per-clinician access rules (today any signed-in clinician
+   sees every file).
+4. **External validation** of the model on a real cohort, with clinical review of the effect sizes.
