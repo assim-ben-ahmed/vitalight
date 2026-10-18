@@ -2,7 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { SEED_FAMILIES } from '../data/families'
 import { txt, type Text } from '../i18n/text'
 import { api, ApiError, health, setToken, type FamilyInput, type Health, type User } from './api'
-import { CONDITIONS, flagged, resultsOf, type Family } from './model'
+import { CONDITIONS, flagged, type Family } from './model'
+import { resultsOf } from './ml'
 import { clinicianAlerts, JUST_NOW, type Notif } from './notifications'
 
 export interface Toast {

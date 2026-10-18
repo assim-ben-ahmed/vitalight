@@ -7,6 +7,8 @@ import NewAssessment from './pages/NewAssessment'
 import Report from './pages/Report'
 import ParentView from './pages/ParentView'
 import Guide from './pages/Guide'
+import ModelCard from './pages/ModelCard'
+import Activity from './pages/Activity'
 
 export default function App() {
   return (
@@ -19,6 +21,8 @@ export default function App() {
         <Route path="report/:id" element={<Report />} />
         <Route path="parent/:id" element={<ParentView />} />
         <Route path="guide" element={<Guide />} />
+        <Route path="model" element={<ModelCard />} />
+        <Route path="activity" element={<Activity />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

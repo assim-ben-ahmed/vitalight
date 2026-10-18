@@ -72,7 +72,8 @@
             "en": "Respiratory follow-up at 6 and 12 months",
             "fr": "Suivi respiratoire à 6 et 12 mois"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -108,7 +109,8 @@
             "en": "Daily emollient advice from the first weeks",
             "fr": "Conseiller un émollient quotidien dès les premières semaines"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -122,7 +124,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -136,7 +139,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -173,7 +177,8 @@
             "en": "Ensure newborn screening result is followed up",
             "fr": "Assurer le suivi du résultat du dépistage néonatal"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -187,7 +192,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -209,7 +215,187 @@
             "en": "Combined first-trimester screening (standard of care)",
             "fr": "Dépistage combiné du premier trimestre (prise en charge standard)"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.19033587582188422,
+        "baseline": 0.08,
+        "rr": 2.3791984477735526,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother has asthma",
+              "fr": "Mère asthmatique"
+            },
+            "rr": 2.1955618897786917
+          },
+          {
+            "label": {
+              "en": "Parental atopic eczema",
+              "fr": "Eczéma atopique parental"
+            },
+            "rr": 1.343642218246709
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Encourage a smoke-free home",
+            "fr": "Encourager un domicile sans tabac"
+          },
+          {
+            "en": "Discuss breastfeeding benefits at the next visit",
+            "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.2823118409612416,
+        "baseline": 0.15,
+        "rr": 1.882078939741611,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Father has atopic eczema",
+              "fr": "Père atteint d’eczéma atopique"
+            },
+            "rr": 1.6390699871848098
+          },
+          {
+            "label": {
+              "en": "Parental asthma",
+              "fr": "Asthme parental"
+            },
+            "rr": 1.1964071212647918
+          },
+          {
+            "label": {
+              "en": "Eczema in grandparents / siblings",
+              "fr": "Eczéma chez les grands-parents / la fratrie"
+            },
+            "rr": 1.0984455016444035
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Daily emollient advice from the first weeks",
+            "fr": "Conseiller un émollient quotidien dès les premières semaines"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.007497699791101912,
+        "baseline": 0.008,
+        "rr": 0.937212473887739,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.25,
+        "baseline": 0.0004,
+        "rr": 625,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother: confirmed carrier",
+              "fr": "Mère : porteuse confirmée"
+            },
+            "rr": 25
+          },
+          {
+            "label": {
+              "en": "Father: confirmed carrier",
+              "fr": "Père : porteur confirmé"
+            },
+            "rr": 25
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Genetic counselling now",
+            "fr": "Conseil génétique dès maintenant"
+          },
+          {
+            "en": "Discuss prenatal diagnosis options",
+            "fr": "Discuter des options de diagnostic prénatal"
+          },
+          {
+            "en": "Ensure newborn screening result is followed up",
+            "fr": "Assurer le suivi du résultat du dépistage néonatal"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.002365358988803448,
+        "baseline": 0.0014285714285714286,
+        "rr": 1.6557512921624136,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 34",
+              "fr": "Âge maternel : 34 ans"
+            },
+            "rr": 1.6557512921624136
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Combined first-trimester screening (standard of care)",
+            "fr": "Dépistage combiné du premier trimestre (prise en charge standard)"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -261,7 +447,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -275,7 +462,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -308,7 +496,8 @@
             "en": "Educate parents on early T1D signs",
             "fr": "Informer les parents des signes précoces du DT1"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -322,7 +511,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -336,7 +526,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -350,7 +541,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -364,7 +556,134 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.06451955002135445,
+        "baseline": 0.08,
+        "rr": 0.8064943752669307,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.13106118549165685,
+        "baseline": 0.15,
+        "rr": 0.8737412366110457,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.10671826013826062,
+        "baseline": 0.004,
+        "rr": 26.679565034565154,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Father has type 1 diabetes",
+              "fr": "Père atteint de diabète de type 1"
+            },
+            "rr": 14.883169339930534
+          },
+          {
+            "label": {
+              "en": "T1D in grandparents / siblings",
+              "fr": "DT1 chez les grands-parents / la fratrie"
+            },
+            "rr": 2.001988626884461
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Refer to a T1D risk-screening programme",
+            "fr": "Orienter vers un programme de dépistage du risque de DT1"
+          },
+          {
+            "en": "Educate parents on early T1D signs",
+            "fr": "Informer les parents des signes précoces du DT1"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.007497699791101912,
+        "baseline": 0.008,
+        "rr": 0.937212473887739,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0010404566488991563,
+        "baseline": 0.0014285714285714286,
+        "rr": 0.7283196542294095,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -414,7 +733,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -428,7 +748,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -442,7 +763,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -471,7 +793,8 @@
             "en": "Standard pulse-oximetry screening at birth",
             "fr": "Dépistage standard par oxymétrie de pouls à la naissance"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -485,7 +808,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -499,7 +823,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -525,7 +850,161 @@
             "en": "Offer cell-free DNA testing",
             "fr": "Proposer le dépistage par ADN libre circulant"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.06515781686695163,
+        "baseline": 0.08,
+        "rr": 0.8144727108368953,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.1297367346406211,
+        "baseline": 0.15,
+        "rr": 0.8649115642708074,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.003940321342452312,
+        "baseline": 0.004,
+        "rr": 0.9850803356130781,
+        "level": "low",
+        "factors": [
+          {
+            "label": {
+              "en": "Assisted conception (IVF)",
+              "fr": "Procréation médicalement assistée (FIV)"
+            },
+            "rr": 1.100145011772773
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.022084329375606768,
+        "baseline": 0.008,
+        "rr": 2.760541171950846,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Assisted conception (IVF)",
+              "fr": "Procréation médicalement assistée (FIV)"
+            },
+            "rr": 1.5128964616810436
+          },
+          {
+            "label": {
+              "en": "CHD in grandparents / siblings",
+              "fr": "Cardiopathie chez les grands-parents / la fratrie"
+            },
+            "rr": 1.4671048954810537
+          },
+          {
+            "label": {
+              "en": "Maternal age 40+",
+              "fr": "Âge maternel ≥ 40 ans"
+            },
+            "rr": 1.3270454434285492
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Fetal echocardiography around 20–22 weeks",
+            "fr": "Échocardiographie fœtale vers 20–22 semaines"
+          },
+          {
+            "en": "Pulse-oximetry screening at birth",
+            "fr": "Oxymétrie de pouls à la naissance"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.012909944487358061,
+        "baseline": 0.0014285714285714286,
+        "rr": 9.036961141150643,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 41",
+              "fr": "Âge maternel : 41 ans"
+            },
+            "rr": 9.036961141150643
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Combined first-trimester screening",
+            "fr": "Dépistage combiné du premier trimestre"
+          },
+          {
+            "en": "Offer cell-free DNA testing",
+            "fr": "Proposer le dépistage par ADN libre circulant"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -573,7 +1052,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -587,7 +1067,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -601,7 +1082,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -615,7 +1097,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -629,7 +1112,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -643,7 +1127,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -657,7 +1142,115 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.06451955002135445,
+        "baseline": 0.08,
+        "rr": 0.8064943752669307,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.13106118549165685,
+        "baseline": 0.15,
+        "rr": 0.8737412366110457,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.007497699791101912,
+        "baseline": 0.008,
+        "rr": 0.937212473887739,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0009123405718915087,
+        "baseline": 0.0014285714285714286,
+        "rr": 0.6386384003240562,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -721,7 +1314,8 @@
             "en": "Discuss breastfeeding benefits at the next visit",
             "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -743,7 +1337,8 @@
             "en": "Daily emollient advice from the first weeks",
             "fr": "Conseiller un émollient quotidien dès les premières semaines"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -757,7 +1352,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -771,7 +1367,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -785,7 +1382,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -811,7 +1409,8 @@
             "en": "Genetic counselling",
             "fr": "Conseil génétique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -833,7 +1432,155 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.11768932094155317,
+        "baseline": 0.08,
+        "rr": 1.4711165117694145,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Father has asthma",
+              "fr": "Père asthmatique"
+            },
+            "rr": 1.8240877517372758
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Encourage a smoke-free home",
+            "fr": "Encourager un domicile sans tabac"
+          },
+          {
+            "en": "Discuss breastfeeding benefits at the next visit",
+            "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.1568025356436241,
+        "baseline": 0.15,
+        "rr": 1.0453502376241606,
+        "level": "low",
+        "factors": [
+          {
+            "label": {
+              "en": "Parental asthma",
+              "fr": "Asthme parental"
+            },
+            "rr": 1.1964071212647918
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.007497699791101912,
+        "baseline": 0.008,
+        "rr": 0.937212473887739,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.008333333333333333,
+        "baseline": 0.0003,
+        "rr": 27.77777777777778,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother: confirmed carrier",
+              "fr": "Mère : porteuse confirmée"
+            },
+            "rr": 30
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Haemoglobinopathy screening for both parents",
+            "fr": "Dépistage des hémoglobinopathies pour les deux parents"
+          },
+          {
+            "en": "Genetic counselling",
+            "fr": "Conseil génétique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0016211652149691756,
+        "baseline": 0.0014285714285714286,
+        "rr": 1.134815650478423,
+        "level": "low",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 32",
+              "fr": "Âge maternel : 32 ans"
+            },
+            "rr": 1.134815650478423
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -896,7 +1643,8 @@
             "en": "Discuss breastfeeding benefits at the next visit",
             "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -910,7 +1658,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -936,7 +1685,8 @@
             "en": "Educate parents on early T1D signs",
             "fr": "Informer les parents des signes précoces du DT1"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -969,7 +1719,8 @@
             "en": "Plan delivery in a centre with paediatric cardiology",
             "fr": "Prévoir l’accouchement dans un centre avec cardiologie pédiatrique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -983,7 +1734,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -997,7 +1749,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -1019,7 +1772,162 @@
             "en": "Combined first-trimester screening (standard of care)",
             "fr": "Dépistage combiné du premier trimestre (prise en charge standard)"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.0770250950873754,
+        "baseline": 0.08,
+        "rr": 0.9628136885921925,
+        "level": "low",
+        "factors": [
+          {
+            "label": {
+              "en": "Smoker in the household",
+              "fr": "Fumeur au domicile"
+            },
+            "rr": 1.1938256708529724
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.13106118549165685,
+        "baseline": 0.15,
+        "rr": 0.8737412366110457,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.013700403418167906,
+        "baseline": 0.004,
+        "rr": 3.4251008545419763,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother has type 1 diabetes",
+              "fr": "Mère atteinte de diabète de type 1"
+            },
+            "rr": 3.82517799180093
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Offer islet autoantibody screening in early childhood",
+            "fr": "Proposer un dépistage des auto-anticorps anti-îlots dans la petite enfance"
+          },
+          {
+            "en": "Educate parents on early T1D signs",
+            "fr": "Informer les parents des signes précoces du DT1"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.1287884684484153,
+        "baseline": 0.008,
+        "rr": 16.098558556051913,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother born with a heart defect",
+              "fr": "Mère née avec une cardiopathie"
+            },
+            "rr": 4.621008632553018
+          },
+          {
+            "label": {
+              "en": "Maternal pre-existing diabetes",
+              "fr": "Diabète maternel préexistant"
+            },
+            "rr": 3.7171676727634377
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Fetal echocardiography around 20–22 weeks",
+            "fr": "Échocardiographie fœtale vers 20–22 semaines"
+          },
+          {
+            "en": "Plan delivery in a centre with paediatric cardiology",
+            "fr": "Prévoir l’accouchement dans un centre avec cardiologie pédiatrique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0019582231010696442,
+        "baseline": 0.0014285714285714286,
+        "rr": 1.370756170748751,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 33",
+              "fr": "Âge maternel : 33 ans"
+            },
+            "rr": 1.370756170748751
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Combined first-trimester screening (standard of care)",
+            "fr": "Dépistage combiné du premier trimestre (prise en charge standard)"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -1090,7 +1998,8 @@
             "en": "Discuss breastfeeding benefits at the next visit",
             "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -1119,7 +2028,8 @@
             "en": "Daily emollient advice from the first weeks",
             "fr": "Conseiller un émollient quotidien dès les premières semaines"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -1133,7 +2043,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -1147,7 +2058,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -1161,7 +2073,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -1175,7 +2088,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -1189,7 +2103,149 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.15813234025385733,
+        "baseline": 0.08,
+        "rr": 1.9766542531732167,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Father has asthma",
+              "fr": "Père asthmatique"
+            },
+            "rr": 1.8240877517372758
+          },
+          {
+            "label": {
+              "en": "Parental atopic eczema",
+              "fr": "Eczéma atopique parental"
+            },
+            "rr": 1.343642218246709
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Encourage a smoke-free home",
+            "fr": "Encourager un domicile sans tabac"
+          },
+          {
+            "en": "Discuss breastfeeding benefits at the next visit",
+            "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.3040290569716536,
+        "baseline": 0.15,
+        "rr": 2.026860379811024,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother has atopic eczema",
+              "fr": "Mère atteinte d’eczéma atopique"
+            },
+            "rr": 1.9389294677137199
+          },
+          {
+            "label": {
+              "en": "Parental asthma",
+              "fr": "Asthme parental"
+            },
+            "rr": 1.1964071212647918
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Daily emollient advice from the first weeks",
+            "fr": "Conseiller un émollient quotidien dès les premières semaines"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.007497699791101912,
+        "baseline": 0.008,
+        "rr": 0.937212473887739,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0002777777777777778,
+        "baseline": 0.0003,
+        "rr": 0.925925925925926,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.001111111111111111,
+        "baseline": 0.0014285714285714286,
+        "rr": 0.7777777777777777,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -1237,7 +2293,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -1251,7 +2308,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -1265,7 +2323,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -1287,7 +2346,8 @@
             "en": "Standard pulse-oximetry screening at birth",
             "fr": "Dépistage standard par oxymétrie de pouls à la naissance"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -1313,7 +2373,8 @@
             "en": "Genetic counselling",
             "fr": "Conseil génétique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -1339,7 +2400,8 @@
             "en": "Genetic counselling",
             "fr": "Conseil génétique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -1353,7 +2415,147 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.06451955002135445,
+        "baseline": 0.08,
+        "rr": 0.8064943752669307,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.13106118549165685,
+        "baseline": 0.15,
+        "rr": 0.8737412366110457,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.016486391433246792,
+        "baseline": 0.008,
+        "rr": 2.060798929155849,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 2.198859902714756
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Standard pulse-oximetry screening at birth",
+            "fr": "Dépistage standard par oxymétrie de pouls à la naissance"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0064,
+        "baseline": 0.0004,
+        "rr": 16,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 4
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Carrier testing for both parents",
+            "fr": "Test de porteur pour les deux parents"
+          },
+          {
+            "en": "Genetic counselling",
+            "fr": "Conseil génétique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.0044444444444444444,
+        "baseline": 0.0003,
+        "rr": 14.814814814814817,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 4
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Haemoglobinopathy screening for both parents",
+            "fr": "Dépistage des hémoglobinopathies pour les deux parents"
+          },
+          {
+            "en": "Genetic counselling",
+            "fr": "Conseil génétique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0008543257326764821,
+        "baseline": 0.0014285714285714286,
+        "rr": 0.5980280128735375,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -1425,7 +2627,8 @@
             "en": "Discuss breastfeeding benefits at the next visit",
             "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -1439,7 +2642,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -1453,7 +2657,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -1482,7 +2687,8 @@
             "en": "Standard pulse-oximetry screening at birth",
             "fr": "Dépistage standard par oxymétrie de pouls à la naissance"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -1519,7 +2725,8 @@
             "en": "Ensure newborn screening result is followed up",
             "fr": "Assurer le suivi du résultat du dépistage néonatal"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -1556,7 +2763,8 @@
             "en": "Haematology follow-up from birth",
             "fr": "Suivi en hématologie dès la naissance"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -1589,7 +2797,225 @@
             "en": "Genetic counselling on diagnostic options",
             "fr": "Conseil génétique sur les options diagnostiques"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.10537793606871301,
+        "baseline": 0.08,
+        "rr": 1.3172242008589126,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Smoking during pregnancy",
+              "fr": "Tabac pendant la grossesse"
+            },
+            "rr": 1.4423330844232018
+          },
+          {
+            "label": {
+              "en": "Asthma in grandparents / siblings",
+              "fr": "Asthme chez les grands-parents / la fratrie"
+            },
+            "rr": 1.1323815711829082
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Encourage a smoke-free home",
+            "fr": "Encourager un domicile sans tabac"
+          },
+          {
+            "en": "Discuss breastfeeding benefits at the next visit",
+            "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.12872898191843862,
+        "baseline": 0.15,
+        "rr": 0.8581932127895908,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.0035816381479591318,
+        "baseline": 0.004,
+        "rr": 0.8954095369897829,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.026842978516278395,
+        "baseline": 0.008,
+        "rr": 3.355372314534799,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 2.198859902714756
+          },
+          {
+            "label": {
+              "en": "Maternal age 40+",
+              "fr": "Âge maternel ≥ 40 ans"
+            },
+            "rr": 1.3270454434285492
+          },
+          {
+            "label": {
+              "en": "Smoking during pregnancy",
+              "fr": "Tabac pendant la grossesse"
+            },
+            "rr": 1.2269286327263786
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Fetal echocardiography around 20–22 weeks",
+            "fr": "Échocardiographie fœtale vers 20–22 semaines"
+          },
+          {
+            "en": "Pulse-oximetry screening at birth",
+            "fr": "Oxymétrie de pouls à la naissance"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.02,
+        "baseline": 0.0004,
+        "rr": 50,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother: family history",
+              "fr": "Mère : antécédents familiaux"
+            },
+            "rr": 12.5
+          },
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 4
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Genetic counselling now",
+            "fr": "Conseil génétique dès maintenant"
+          },
+          {
+            "en": "Discuss prenatal diagnosis options",
+            "fr": "Discuter des options de diagnostic prénatal"
+          },
+          {
+            "en": "Ensure newborn screening result is followed up",
+            "fr": "Assurer le suivi du résultat du dépistage néonatal"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.016666666666666666,
+        "baseline": 0.0003,
+        "rr": 55.55555555555556,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Father: family history",
+              "fr": "Père : antécédents familiaux"
+            },
+            "rr": 15
+          },
+          {
+            "label": {
+              "en": "Consanguinity",
+              "fr": "Consanguinité"
+            },
+            "rr": 4
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Genetic counselling now",
+            "fr": "Conseil génétique dès maintenant"
+          },
+          {
+            "en": "Discuss prenatal diagnosis options",
+            "fr": "Discuter des options de diagnostic prénatal"
+          },
+          {
+            "en": "Haematology follow-up from birth",
+            "fr": "Suivi en hématologie dès la naissance"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.06085037365878097,
+        "baseline": 0.0014285714285714286,
+        "rr": 42.59526156114668,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 47",
+              "fr": "Âge maternel : 47 ans"
+            },
+            "rr": 37.039357879257985
+          },
+          {
+            "label": {
+              "en": "Paternal age 46",
+              "fr": "Âge paternel : 46 ans"
+            },
+            "rr": 1.15
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Offer cell-free DNA testing",
+            "fr": "Proposer le dépistage par ADN libre circulant"
+          },
+          {
+            "en": "Genetic counselling on diagnostic options",
+            "fr": "Conseil génétique sur les options diagnostiques"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -1663,7 +3089,8 @@
             "en": "Discuss breastfeeding benefits at the next visit",
             "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -1685,7 +3112,8 @@
             "en": "Daily emollient advice from the first weeks",
             "fr": "Conseiller un émollient quotidien dès les premières semaines"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -1711,7 +3139,8 @@
             "en": "Educate parents on early T1D signs",
             "fr": "Informer les parents des signes précoces du DT1"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -1751,7 +3180,8 @@
             "en": "Plan delivery in a centre with paediatric cardiology",
             "fr": "Prévoir l’accouchement dans un centre avec cardiologie pédiatrique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -1781,7 +3211,8 @@
             "en": "Ensure newborn screening result is followed up",
             "fr": "Assurer le suivi du résultat du dépistage néonatal"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -1807,7 +3238,8 @@
             "en": "Genetic counselling",
             "fr": "Conseil génétique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -1821,7 +3253,236 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.11297948787242638,
+        "baseline": 0.08,
+        "rr": 1.4122435984053299,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Parental atopic eczema",
+              "fr": "Eczéma atopique parental"
+            },
+            "rr": 1.343642218246709
+          },
+          {
+            "label": {
+              "en": "Smoker in the household",
+              "fr": "Fumeur au domicile"
+            },
+            "rr": 1.1938256708529724
+          },
+          {
+            "label": {
+              "en": "Gestational diabetes",
+              "fr": "Diabète gestationnel"
+            },
+            "rr": 1.0809572595566614
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Encourage a smoke-free home",
+            "fr": "Encourager un domicile sans tabac"
+          },
+          {
+            "en": "Discuss breastfeeding benefits at the next visit",
+            "fr": "Aborder les bénéfices de l’allaitement à la prochaine consultation"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.2515503778396556,
+        "baseline": 0.15,
+        "rr": 1.6770025189310376,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother has atopic eczema",
+              "fr": "Mère atteinte d’eczéma atopique"
+            },
+            "rr": 1.9389294677137199
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Daily emollient advice from the first weeks",
+            "fr": "Conseiller un émollient quotidien dès les premières semaines"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.017702737329065663,
+        "baseline": 0.004,
+        "rr": 4.425684332266416,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother has type 1 diabetes",
+              "fr": "Mère atteinte de diabète de type 1"
+            },
+            "rr": 3.82517799180093
+          },
+          {
+            "label": {
+              "en": "Gestational diabetes",
+              "fr": "Diabète gestationnel"
+            },
+            "rr": 1.1745111283030023
+          },
+          {
+            "label": {
+              "en": "Assisted conception (IVF)",
+              "fr": "Procréation médicalement assistée (FIV)"
+            },
+            "rr": 1.100145011772773
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Offer islet autoantibody screening in early childhood",
+            "fr": "Proposer un dépistage des auto-anticorps anti-îlots dans la petite enfance"
+          },
+          {
+            "en": "Educate parents on early T1D signs",
+            "fr": "Informer les parents des signes précoces du DT1"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.10209066377104366,
+        "baseline": 0.008,
+        "rr": 12.761332971380456,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal pre-existing diabetes",
+              "fr": "Diabète maternel préexistant"
+            },
+            "rr": 3.7171676727634377
+          },
+          {
+            "label": {
+              "en": "Father born with a heart defect",
+              "fr": "Père né avec une cardiopathie"
+            },
+            "rr": 2.232682997111475
+          },
+          {
+            "label": {
+              "en": "Assisted conception (IVF)",
+              "fr": "Procréation médicalement assistée (FIV)"
+            },
+            "rr": 1.5128964616810436
+          },
+          {
+            "label": {
+              "en": "Gestational diabetes",
+              "fr": "Diabète gestationnel"
+            },
+            "rr": 1.0844500585315864
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Fetal echocardiography around 20–22 weeks",
+            "fr": "Échocardiographie fœtale vers 20–22 semaines"
+          },
+          {
+            "en": "Plan delivery in a centre with paediatric cardiology",
+            "fr": "Prévoir l’accouchement dans un centre avec cardiologie pédiatrique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.01,
+        "baseline": 0.0004,
+        "rr": 25,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Father: affected",
+              "fr": "Père : atteint"
+            },
+            "rr": 25
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Genetic counselling now",
+            "fr": "Conseil génétique dès maintenant"
+          },
+          {
+            "en": "Discuss prenatal diagnosis options",
+            "fr": "Discuter des options de diagnostic prénatal"
+          },
+          {
+            "en": "Ensure newborn screening result is followed up",
+            "fr": "Assurer le suivi du résultat du dépistage néonatal"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.008333333333333333,
+        "baseline": 0.0003,
+        "rr": 27.77777777777778,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother: affected",
+              "fr": "Mère : atteinte"
+            },
+            "rr": 30
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Haemoglobinopathy screening for both parents",
+            "fr": "Dépistage des hémoglobinopathies pour les deux parents"
+          },
+          {
+            "en": "Genetic counselling",
+            "fr": "Conseil génétique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.0006666666666666666,
+        "baseline": 0.0014285714285714286,
+        "rr": 0.4666666666666667,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   },
@@ -1877,7 +3538,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "eczema",
@@ -1899,7 +3561,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "t1d",
@@ -1921,7 +3584,8 @@
             "en": "Inform parents of early T1D signs (thirst, weight loss)",
             "fr": "Informer les parents des signes précoces du DT1 (soif, perte de poids)"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "chd",
@@ -1954,7 +3618,8 @@
             "en": "Pulse-oximetry screening at birth",
             "fr": "Oxymétrie de pouls à la naissance"
           }
-        ]
+        ],
+        "method": "rules"
       },
       {
         "id": "cf",
@@ -1968,7 +3633,8 @@
             "en": "Routine care, no specific action",
             "fr": "Suivi habituel, aucune action spécifique"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "scd",
@@ -2005,7 +3671,8 @@
             "en": "Haematology follow-up from birth",
             "fr": "Suivi en hématologie dès la naissance"
           }
-        ]
+        ],
+        "method": "genetic"
       },
       {
         "id": "chromo",
@@ -2038,7 +3705,192 @@
             "en": "Offer cell-free DNA testing",
             "fr": "Proposer le dépistage par ADN libre circulant"
           }
-        ]
+        ],
+        "method": "genetic"
+      }
+    ],
+    "ml": [
+      {
+        "id": "asthma",
+        "risk": 0.06451955002135445,
+        "baseline": 0.08,
+        "rr": 0.8064943752669307,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "eczema",
+        "risk": 0.14396356964349324,
+        "baseline": 0.15,
+        "rr": 0.9597571309566216,
+        "level": "low",
+        "factors": [
+          {
+            "label": {
+              "en": "Eczema in grandparents / siblings",
+              "fr": "Eczéma chez les grands-parents / la fratrie"
+            },
+            "rr": 1.0984455016444035
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "t1d",
+        "risk": 0.007170398837829707,
+        "baseline": 0.004,
+        "rr": 1.7925997094574269,
+        "level": "moderate",
+        "factors": [
+          {
+            "label": {
+              "en": "T1D in grandparents / siblings",
+              "fr": "DT1 chez les grands-parents / la fratrie"
+            },
+            "rr": 2.001988626884461
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Inform parents of early T1D signs (thirst, weight loss)",
+            "fr": "Informer les parents des signes précoces du DT1 (soif, perte de poids)"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "chd",
+        "risk": 0.040888517543796105,
+        "baseline": 0.008,
+        "rr": 5.111064692974513,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal pre-existing diabetes",
+              "fr": "Diabète maternel préexistant"
+            },
+            "rr": 3.7171676727634377
+          },
+          {
+            "label": {
+              "en": "CHD in grandparents / siblings",
+              "fr": "Cardiopathie chez les grands-parents / la fratrie"
+            },
+            "rr": 1.4671048954810537
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Fetal echocardiography around 20–22 weeks",
+            "fr": "Échocardiographie fœtale vers 20–22 semaines"
+          },
+          {
+            "en": "Pulse-oximetry screening at birth",
+            "fr": "Oxymétrie de pouls à la naissance"
+          }
+        ],
+        "method": "ml"
+      },
+      {
+        "id": "cf",
+        "risk": 0.0004,
+        "baseline": 0.0004,
+        "rr": 1,
+        "level": "low",
+        "factors": [],
+        "recommendations": [
+          {
+            "en": "Routine care, no specific action",
+            "fr": "Suivi habituel, aucune action spécifique"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "scd",
+        "risk": 0.25,
+        "baseline": 0.0003,
+        "rr": 833.3333333333334,
+        "level": "high",
+        "factors": [
+          {
+            "label": {
+              "en": "Mother: confirmed carrier",
+              "fr": "Mère : porteuse confirmée"
+            },
+            "rr": 30
+          },
+          {
+            "label": {
+              "en": "Father: confirmed carrier",
+              "fr": "Père : porteur confirmé"
+            },
+            "rr": 30
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Genetic counselling now",
+            "fr": "Conseil génétique dès maintenant"
+          },
+          {
+            "en": "Discuss prenatal diagnosis options",
+            "fr": "Discuter des options de diagnostic prénatal"
+          },
+          {
+            "en": "Haematology follow-up from birth",
+            "fr": "Suivi en hématologie dès la naissance"
+          }
+        ],
+        "method": "genetic"
+      },
+      {
+        "id": "chromo",
+        "risk": 0.006571428571428568,
+        "baseline": 0.0014285714285714286,
+        "rr": 4.599999999999998,
+        "level": "elevated",
+        "factors": [
+          {
+            "label": {
+              "en": "Maternal age 38",
+              "fr": "Âge maternel : 38 ans"
+            },
+            "rr": 3.9999999999999982
+          },
+          {
+            "label": {
+              "en": "Paternal age 45",
+              "fr": "Âge paternel : 45 ans"
+            },
+            "rr": 1.15
+          }
+        ],
+        "recommendations": [
+          {
+            "en": "Combined first-trimester screening",
+            "fr": "Dépistage combiné du premier trimestre"
+          },
+          {
+            "en": "Offer cell-free DNA testing",
+            "fr": "Proposer le dépistage par ADN libre circulant"
+          }
+        ],
+        "method": "genetic"
       }
     ]
   }

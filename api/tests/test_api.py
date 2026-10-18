@@ -50,6 +50,15 @@ def test_wrong_password_and_missing_token_are_rejected(client):
     assert client.get("/api/families", headers={"Authorization": "Bearer forged.token"}).status_code == 401
 
 
+def test_repeated_failed_logins_are_locked_out(client):
+    creds = {"email": "a.petit@vitalight.demo", "password": "wrong"}
+    codes = [client.post("/api/auth/login", json=creds).status_code for _ in range(6)]
+    assert codes == [401] * 5 + [429]
+    # even the right password is refused while locked
+    ok = {"email": "a.petit@vitalight.demo", "password": DEMO_PASSWORD}
+    assert client.post("/api/auth/login", json=ok).status_code == 429
+
+
 def test_seed_families_come_with_assessments(client, auth):
     fams = client.get("/api/families", headers=auth).json()
     assert len(fams) == 8

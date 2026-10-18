@@ -1,5 +1,5 @@
 // Captures portfolio-ready screenshots of the demo, in English and French.
-// Usage: start `npm run dev` in another terminal, then `npm run screenshots`.
+// Usage: start `npm run dev` (without the API, so the app runs in offline demo mode), then `npm run screenshots`.
 //   npm run screenshots          -> screenshots/en and screenshots/fr
 //   LANGS=fr npm run screenshots -> French only
 // Output: 1440x900 @2x PNGs. Uses the installed Edge or Chrome.
@@ -18,6 +18,7 @@ const SHOTS = [
   { name: '04-report-martin', hash: '#/app/report/VL-1042' },
   { name: '05-report-benali', hash: '#/app/report/VL-1039' },
   { name: '06-parent-app', hash: '#/app/parent/VL-1042' },
+  { name: '13-model-card', hash: '#/app/model' },
 ]
 
 async function launch() {

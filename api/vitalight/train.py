@@ -29,7 +29,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression, PoissonRegressor
 from sklearn.metrics import brier_score_loss, log_loss, roc_auc_score
 
-from .features import FEATURES
+from .features import FEATURES, LABELS
 from .simulate import cohort
 
 from .ml import ARTIFACT
@@ -108,6 +108,7 @@ def train(n_train: int, n_test: int, seed: int) -> dict:
             "oracle": scores(yte, p_te[cid].to_numpy()),
             "calibration": calibration(yte, p_glm),
             "relativeRisks": {f: round(math.exp(c), 3) for f, c in zip(feats, glm.coef_)},
+            "rulesRelativeRisks": {f: rr.get(f, 1.0) for f in feats},
         }
         m = metrics[cid]
         print(
@@ -131,6 +132,7 @@ def train(n_train: int, n_test: int, seed: int) -> dict:
             "seed": seed,
         },
         "conditions": conditions,
+        "labels": {k: v.model_dump() for k, v in LABELS.items()},
         "metrics": metrics,
         "geneticsNote": "Cystic fibrosis, sickle cell and trisomy 21 use exact Mendelian / maternal-age rules, not learned.",
     }

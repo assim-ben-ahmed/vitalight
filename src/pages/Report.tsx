@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Disclaimer, FactorBars, LevelBadge, RiskRing } from '../components/ui'
 import { fmtDate, fmtRisk, fmtRR, useLang } from '../i18n'
-import { resultsOf, completeness, CONDITIONS, flagged, topLevel, type ConditionId, type ParentProfile } from '../lib/model'
+import { completeness, CONDITIONS, flagged, topLevel, type ConditionId, type ParentProfile } from '../lib/model'
+import { MODEL_VERSION, resultsOf } from '../lib/ml'
 import { useStore } from '../lib/store'
 
 function ParentSummary({ who, p }: { who: string; p: ParentProfile }) {
@@ -72,7 +73,7 @@ export default function Report() {
           <p className="model-line">
             {f.assessment
               ? r.modelLine(f.assessment.modelVersion, fmtDate(f.assessment.createdAt.slice(0, 10), lang))
-              : r.localModel}
+              : r.localModel(MODEL_VERSION)}
           </p>
         </div>
         <div className="head-actions">

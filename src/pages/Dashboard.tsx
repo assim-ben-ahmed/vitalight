@@ -2,7 +2,8 @@ import { AlertTriangle, ArrowRight, ClipboardCheck, PlusCircle, Users } from 'lu
 import { Link } from 'react-router-dom'
 import { Disclaimer, LevelBadge } from '../components/ui'
 import { fmtDate, useLang } from '../i18n'
-import { resultsOf, CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
+import { CONDITIONS, flagged, LEVEL_LABEL, topLevel, type Level } from '../lib/model'
+import { resultsOf } from '../lib/ml'
 import { useStore } from '../lib/store'
 
 const LEVELS: Level[] = ['low', 'moderate', 'elevated', 'high']

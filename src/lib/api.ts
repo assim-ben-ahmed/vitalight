@@ -65,6 +65,14 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
   return res.status === 204 ? (undefined as T) : res.json()
 }
 
+export interface AuditEntry {
+  ts: string
+  user: string
+  action: string
+  familyId: string | null
+  detail: string | null
+}
+
 export interface Health {
   status: string
   version: string
@@ -97,5 +105,7 @@ export const api = {
   review: (id: string) => call<Family>(`/families/${encodeURIComponent(id)}/review`, { method: 'POST' }),
   reassess: (id: string) => call<Family>(`/families/${encodeURIComponent(id)}/reassess`, { method: 'POST' }),
   remove: (id: string) => call<void>(`/families/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  model: () => call<Record<string, unknown>>('/model'),
+  audit: (limit = 200) => call<AuditEntry[]>(`/audit?limit=${limit}`),
   preview: (f: FamilyInput) => call<ConditionResult[]>('/assess', { method: 'POST', body: JSON.stringify(f) }),
 }

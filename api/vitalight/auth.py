@@ -12,6 +12,7 @@ import json
 import os
 import secrets
 import time
+from collections import defaultdict, deque
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -24,6 +25,32 @@ TOKEN_TTL = 12 * 3600
 _ITER = 200_000
 
 bearer = HTTPBearer(auto_error=False)
+
+# Brute-force protection: after MAX_FAILURES failed sign-ins for one email from one address within WINDOW
+# seconds, further attempts are refused until the window clears. In memory, so per process: production would
+# keep this in Redis or rely on the identity provider's own lockout.
+MAX_FAILURES = 5
+WINDOW = 15 * 60
+_failures: dict[tuple[str, str], deque[float]] = defaultdict(deque)
+
+
+def _recent(key: tuple[str, str]) -> deque[float]:
+    q = _failures[key]
+    while q and q[0] < time.time() - WINDOW:
+        q.popleft()
+    return q
+
+
+def is_locked(email: str, ip: str) -> bool:
+    return len(_recent((email, ip))) >= MAX_FAILURES
+
+
+def record_failure(email: str, ip: str) -> None:
+    _recent((email, ip)).append(time.time())
+
+
+def clear_failures(email: str, ip: str) -> None:
+    _failures.pop((email, ip), None)
 
 
 def hash_password(password: str, salt: bytes | None = None) -> str:

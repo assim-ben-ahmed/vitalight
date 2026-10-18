@@ -14,10 +14,11 @@ from .schemas import FamilyInput
 
 DEMO_PASSWORD = os.environ.get("VITALIGHT_DEMO_PASSWORD", "vitalight-demo")
 
+# role is a key the frontend translates (shell.roles in src/i18n/strings.ts)
 USERS = [
-    ("l.moreau@vitalight.demo", "Dr. L. Moreau", "LM", "Obstetrician"),
-    ("s.haddad@vitalight.demo", "Dr. S. Haddad", "SH", "Paediatrician"),
-    ("a.petit@vitalight.demo", "Dr. A. Petit", "AP", "Midwife"),
+    ("l.moreau@vitalight.demo", "Dr. L. Moreau", "LM", "obstetrics"),
+    ("s.haddad@vitalight.demo", "Dr. S. Haddad", "SH", "paediatrics"),
+    ("a.petit@vitalight.demo", "Dr. A. Petit", "AP", "midwifery"),
 ]
 
 

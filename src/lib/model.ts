@@ -284,17 +284,28 @@ const RECS: Record<ConditionId, Partial<Record<Level, Text[]>>> = {
 const ROUTINE = txt('Routine care, no specific action', 'Suivi habituel, aucune action spécifique')
 const SMOKING_PREG = txt('Smoking during pregnancy', 'Tabac pendant la grossesse')
 
+export const GENETIC: ConditionId[] = ['cf', 'scd', 'chromo']
+
+export function makeResult(
+  id: ConditionId,
+  risk: number,
+  factors: Factor[],
+  method: ConditionResult['method'],
+): ConditionResult {
+  const baseline = CONDITIONS[id].baseline
+  const rr = risk / baseline
+  const level = levelOf(risk, rr)
+  const recommendations = RECS[id][level] ?? [ROUTINE]
+  return { id, risk, baseline, rr, level, factors: [...factors].sort((a, b) => b.rr - a.rr), recommendations, method }
+}
+
+// Reference rule engine (kept in exact parity with api/vitalight/engine.py).
 export function assess(f: Family): ConditionResult[] {
   const { mother: m, father: d, pregnancy: p } = f
   const out: ConditionResult[] = []
 
-  const push = (id: ConditionId, risk: number, factors: Factor[]) => {
-    const baseline = CONDITIONS[id].baseline
-    const rr = risk / baseline
-    const level = levelOf(risk, rr)
-    const recommendations = RECS[id][level] ?? [ROUTINE]
-    out.push({ id, risk, baseline, rr, level, factors: factors.sort((a, b) => b.rr - a.rr), recommendations })
-  }
+  const push = (id: ConditionId, risk: number, factors: Factor[]) =>
+    out.push(makeResult(id, risk, factors, GENETIC.includes(id) ? 'genetic' : 'rules'))
 
   // Asthma
   {
@@ -370,11 +381,6 @@ export function assess(f: Family): ConditionResult[] {
   }
 
   return out
-}
-
-// Results to display: the server's stored assessment when there is one, else the local engine (offline demo).
-export function resultsOf(f: Family): ConditionResult[] {
-  return f.assessment?.results ?? assess(f)
 }
 
 const LEVEL_RANK: Record<Level, number> = { low: 0, moderate: 1, elevated: 2, high: 3 }

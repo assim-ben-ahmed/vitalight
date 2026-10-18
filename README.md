@@ -8,6 +8,10 @@ turns the report into plain language and a weekly pregnancy guide.
 > Synthetic data only. Risk figures are illustrative orders of magnitude, not a diagnosis and not a medical
 > device.
 
+| Risk report | Model card |
+|---|---|
+| ![Risk report for the Martin family](screenshots/en/04-report-martin.png) | ![Model card with calibration plots](screenshots/en/13-model-card.png) |
+
 ```
  React + TypeScript (Vite)                 FastAPI (Python)                         SQLite / PostgreSQL
  ┌──────────────────────────┐   /api   ┌──────────────────────────────────┐    ┌──────────────────────┐
@@ -40,20 +44,24 @@ docker run -p 8000:8000 -v vitalight-data:/data -e VITALIGHT_SECRET=change-me vi
 Demo sign-in: `l.moreau@vitalight.demo`, `s.haddad@vitalight.demo` or `a.petit@vitalight.demo`, password
 `vitalight-demo`. The database is created and seeded with 8 fictional families on first start.
 
-**Offline mode.** When no API answers (for example on GitHub Pages), the frontend runs the original in-browser
-demo on the same synthetic families. The sidebar chip shows which mode is active.
+**Offline mode.** When no API answers (for example on GitHub Pages), the frontend runs on its own: the same
+synthetic families, and the **same trained model** running in the browser from the JSON artifact
+(`src/lib/ml.ts`). Nothing is stored and there is no sign-in. The sidebar chip shows which mode is active.
 
 ## Checks
 
 ```bash
-npm test             # 26 API, model and parity tests (pytest)
-npm run golden       # re-export the TypeScript engine's outputs used by the parity test
+npm test             # 38 API, model and parity tests (pytest)
+npm run golden       # re-export the browser engine and model outputs used by the parity tests
 node scripts/e2e.mjs # browser test of the full system (needs the server on :8000)
 npm run typecheck
 ```
 
-The end-to-end test signs in, opens a report from the trained model, creates a family, reviews it, reloads to
-confirm it was saved, and checks that the form blocks a run without parental consent.
+The parity tests run the TypeScript rules and the in-browser model on 11 families and require the Python side
+to give the same risks, levels, factors and recommendations, so the offline demo and the server can't drift
+apart. The end-to-end test signs in, opens a report from the trained model, creates a family, reviews it,
+reloads to confirm it was saved, opens the model card and the activity log, and checks that the form blocks a
+run without parental consent.
 
 ## The model
 
@@ -109,7 +117,7 @@ current model.
 | Method & path | What it does |
 |---|---|
 | `GET /api/health` | Status, model version, engine in use |
-| `POST /api/auth/login` | Email and password → bearer token (12 h) |
+| `POST /api/auth/login` | Email and password → bearer token (12 h). 5 failures in 15 min lock that email from that address for 15 min |
 | `GET /api/model` | Model card: training data, metrics vs benchmarks, calibration, learned relative risks |
 | `GET /api/families` · `GET /api/families/{id}` | Files with their latest assessment |
 | `POST /api/families` | Create and assess a file (**rejected without parental consent**) |
@@ -134,6 +142,8 @@ Interactive docs: `/docs`. Configuration is through environment variables: `VITA
 | `#/app/report/:id` | Risk report: 7 conditions, risk vs. baseline, factor breakdown, method and model version, follow-up |
 | `#/app/parent/:id` | Parent mobile app: plain-language report, pregnancy guide, notification inbox, push demo |
 | `#/app/guide` | Pregnancy guide (eat well / avoid / habits, with sources) and the weekly push schedule |
+| `#/app/model` | Model card: held-out accuracy vs rules, boosting and oracle, calibration plots, learned relative risks |
+| `#/app/activity` | Activity log from the server's audit trail (online only) |
 
 ## Structure
 
@@ -153,14 +163,26 @@ api/
 src/
   lib/api.ts             API client, health probe
   lib/store.tsx          online/offline state, auth, families, alerts, toasts
-  lib/model.ts           in-browser engine (offline mode) and shared types
-  pages/                 one file per screen, plus Login
+  lib/model.ts           reference rules, genetics and shared types
+  lib/ml.ts              the trained model in the browser (reads api/models/vitalight-model.json)
+  pages/                 one file per screen, plus Login, ModelCard and Activity
   i18n/                  EN/FR strings (TypeScript checks both have the same keys)
 scripts/
   e2e.mjs                full-system browser test
   export-golden.mjs      TypeScript engine outputs for the parity test
   screenshots.mjs        portfolio screenshots (2880x1800, EN and FR)
 ```
+
+## Deploy
+
+- **GitHub Pages (public demo).** `.github/workflows/pages.yml` builds the frontend and publishes it on every
+  push to `main`. One-time setup: in the repository, go to Settings > Pages and set Source to "GitHub Actions".
+  The page runs in offline mode, with the trained model in the browser.
+- **Full system.** The Docker image runs anywhere containers run (Azure Container Apps or App Service, Render,
+  Fly.io). Set `VITALIGHT_SECRET`, mount a volume on `/data` (or point `VITALIGHT_DB` at PostgreSQL), and
+  change `VITALIGHT_DEMO_PASSWORD` before the first start.
+- **CI.** `.github/workflows/ci.yml` runs the parity export, the tests, the build, a dev-server check and the
+  Docker build on every push.
 
 ## Languages
 

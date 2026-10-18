@@ -62,6 +62,15 @@ try {
   await page.locator('.status-reviewed').waitFor()
   step('survives a reload (persisted server-side)')
 
+  await page.goto(BASE + '#/app/model')
+  await page.getByRole('heading', { name: 'How the model works' }).waitFor()
+  if ((await page.locator('.calib svg').count()) !== 4) throw new Error('expected 4 calibration plots')
+  step('model card with 4 calibration plots')
+
+  await page.goto(BASE + '#/app/activity')
+  await page.getByText('Reviewed and shared').first().waitFor()
+  step(`activity log shows the review of ${id}`)
+
   await page.goto(BASE + '#/app/new')
   for (let i = 0; i < 4; i++) await page.locator('[data-shot="continue"]').click()
   await page.getByRole('button', { name: 'Run risk prediction' }).click()

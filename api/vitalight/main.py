@@ -13,14 +13,14 @@ from contextlib import asynccontextmanager
 from datetime import date
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, HTTPException, Response, status
+from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import __version__
-from .auth import current_user, issue_token, verify_password
+from .auth import clear_failures, current_user, is_locked, issue_token, record_failure, verify_password
 from .db import AssessmentRow, AuditRow, FamilyRow, UserRow, audit, get_session, init_db, next_family_id, SessionLocal
 from .engine import CONDITIONS, CONDITION_ORDER
 from .ml import load_card, model_version, predict
@@ -118,12 +118,20 @@ def health():
 
 
 @app.post("/api/auth/login", response_model=LoginOutput)
-def login(body: LoginInput, s: Session = Depends(get_session)):
-    user = s.get(UserRow, body.email.strip().lower())
+def login(body: LoginInput, request: Request, s: Session = Depends(get_session)):
+    email = body.email.strip().lower()[:120]
+    ip = request.client.host if request.client else "?"
+    if is_locked(email, ip):
+        audit(s, email, "login-locked", detail=ip)
+        s.commit()
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Too many failed attempts, try again in 15 minutes")
+    user = s.get(UserRow, email)
     if user is None or not verify_password(body.password, user.password_hash):
-        audit(s, body.email[:120], "login-failed")
+        record_failure(email, ip)
+        audit(s, email, "login-failed", detail=ip)
         s.commit()
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid email or password")
+    clear_failures(email, ip)
     audit(s, user.email, "login")
     s.commit()
     return LoginOutput(token=issue_token(user.email), user=to_user(user))

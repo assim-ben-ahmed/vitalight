@@ -1,6 +1,6 @@
 {
-  "version": "vl-2026.10.17-poisson",
-  "trainedAt": "2026-10-17T16:03:03+00:00",
+  "version": "vl-2026.10.18-poisson",
+  "trainedAt": "2026-10-18T12:56:28+00:00",
   "algorithm": "Log-linear Poisson regression per condition (scikit-learn PoissonRegressor)",
   "explanation": "exp(coefficient) = relative risk of each factor; risk = exp(intercept + sum of active coefficients)",
   "data": {
@@ -63,6 +63,92 @@
         "mat_age_40": 0.282955
       },
       "cap": 0.25
+    }
+  },
+  "labels": {
+    "m_asthma": {
+      "en": "Mother has asthma",
+      "fr": "Mère asthmatique"
+    },
+    "f_asthma": {
+      "en": "Father has asthma",
+      "fr": "Père asthmatique"
+    },
+    "m_eczema": {
+      "en": "Mother has atopic eczema",
+      "fr": "Mère atteinte d’eczéma atopique"
+    },
+    "f_eczema": {
+      "en": "Father has atopic eczema",
+      "fr": "Père atteint d’eczéma atopique"
+    },
+    "par_eczema": {
+      "en": "Parental atopic eczema",
+      "fr": "Eczéma atopique parental"
+    },
+    "par_asthma": {
+      "en": "Parental asthma",
+      "fr": "Asthme parental"
+    },
+    "fh_asthma": {
+      "en": "Asthma in grandparents / siblings",
+      "fr": "Asthme chez les grands-parents / la fratrie"
+    },
+    "fh_eczema": {
+      "en": "Eczema in grandparents / siblings",
+      "fr": "Eczéma chez les grands-parents / la fratrie"
+    },
+    "fh_t1d": {
+      "en": "T1D in grandparents / siblings",
+      "fr": "DT1 chez les grands-parents / la fratrie"
+    },
+    "fh_chd": {
+      "en": "CHD in grandparents / siblings",
+      "fr": "Cardiopathie chez les grands-parents / la fratrie"
+    },
+    "m_t1d": {
+      "en": "Mother has type 1 diabetes",
+      "fr": "Mère atteinte de diabète de type 1"
+    },
+    "f_t1d": {
+      "en": "Father has type 1 diabetes",
+      "fr": "Père atteint de diabète de type 1"
+    },
+    "m_chd": {
+      "en": "Mother born with a heart defect",
+      "fr": "Mère née avec une cardiopathie"
+    },
+    "f_chd": {
+      "en": "Father born with a heart defect",
+      "fr": "Père né avec une cardiopathie"
+    },
+    "mat_diabetes": {
+      "en": "Maternal pre-existing diabetes",
+      "fr": "Diabète maternel préexistant"
+    },
+    "gdm": {
+      "en": "Gestational diabetes",
+      "fr": "Diabète gestationnel"
+    },
+    "consanguinity": {
+      "en": "Consanguinity",
+      "fr": "Consanguinité"
+    },
+    "ivf": {
+      "en": "Assisted conception (IVF)",
+      "fr": "Procréation médicalement assistée (FIV)"
+    },
+    "smoke_preg": {
+      "en": "Smoking during pregnancy",
+      "fr": "Tabac pendant la grossesse"
+    },
+    "smoke_home": {
+      "en": "Smoker in the household",
+      "fr": "Fumeur au domicile"
+    },
+    "mat_age_40": {
+      "en": "Maternal age 40+",
+      "fr": "Âge maternel ≥ 40 ans"
     }
   },
   "metrics": {
@@ -155,6 +241,16 @@
         "smoke_home": 1.194,
         "gdm": 1.081,
         "ivf": 1.01
+      },
+      "rulesRelativeRisks": {
+        "m_asthma": 2.0,
+        "f_asthma": 1.7,
+        "par_eczema": 1.25,
+        "fh_asthma": 1.15,
+        "smoke_preg": 1.4,
+        "smoke_home": 1.2,
+        "gdm": 1.0,
+        "ivf": 1.0
       }
     },
     "eczema": {
@@ -244,6 +340,14 @@
         "fh_eczema": 1.098,
         "smoke_preg": 0.982,
         "ivf": 0.99
+      },
+      "rulesRelativeRisks": {
+        "m_eczema": 1.8,
+        "f_eczema": 1.6,
+        "par_asthma": 1.2,
+        "fh_eczema": 1.1,
+        "smoke_preg": 1.0,
+        "ivf": 1.0
       }
     },
     "t1d": {
@@ -332,6 +436,13 @@
         "fh_t1d": 2.002,
         "gdm": 1.175,
         "ivf": 1.1
+      },
+      "rulesRelativeRisks": {
+        "f_t1d": 15,
+        "m_t1d": 8,
+        "fh_t1d": 1.8,
+        "gdm": 1.0,
+        "ivf": 1.0
       }
     },
     "chd": {
@@ -424,6 +535,17 @@
         "smoke_preg": 1.227,
         "gdm": 1.084,
         "mat_age_40": 1.327
+      },
+      "rulesRelativeRisks": {
+        "m_chd": 5,
+        "f_chd": 3,
+        "mat_diabetes": 3.5,
+        "consanguinity": 2,
+        "fh_chd": 1.5,
+        "ivf": 1.3,
+        "smoke_preg": 1.2,
+        "gdm": 1.0,
+        "mat_age_40": 1.0
       }
     }
   },

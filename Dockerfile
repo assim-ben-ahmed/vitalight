@@ -9,6 +9,7 @@ RUN npm ci
 COPY index.html tsconfig.json vite.config.ts ./
 COPY public ./public
 COPY src ./src
+COPY api/models ./api/models
 RUN npm run build
 
 FROM python:3.11-slim
@@ -25,5 +26,5 @@ RUN useradd --create-home vitalight && mkdir /data && chown vitalight /data
 USER vitalight
 VOLUME /data
 EXPOSE 8000
-HEALTHCHECK CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"
+HEALTHCHECK --interval=15s --start-period=5s CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"
 CMD ["python", "-m", "uvicorn", "--app-dir", "api", "vitalight.main:app", "--host", "0.0.0.0", "--port", "8000"]

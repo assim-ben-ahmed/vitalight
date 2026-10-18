@@ -7,7 +7,8 @@
 
 import { GUIDE } from '../data/guide'
 import { fmtRR, txt, type Text } from '../i18n/text'
-import { resultsOf, CONDITIONS, flagged, topLevel, type Family } from './model'
+import { CONDITIONS, flagged, topLevel, type Family } from './model'
+import { resultsOf } from './ml'
 
 export type NotifKind = 'eat' | 'avoid' | 'habits' | 'reminder' | 'personal' | 'alert' | 'result'
 

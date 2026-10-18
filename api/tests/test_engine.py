@@ -30,6 +30,17 @@ def test_python_rules_match_typescript(case):
         assert [r.model_dump() for r in p.recommendations] == t["recommendations"], p.id
 
 
+@pytest.mark.parametrize("case", GOLDEN, ids=[c["family"]["id"] for c in GOLDEN])
+def test_browser_model_matches_server_model(case):
+    py = ml.predict(to_input(case["family"]))
+    ts = case["ml"]
+    for p, t in zip(py, ts, strict=True):
+        assert (p.id, p.method, p.level) == (t["id"], t["method"], t["level"])
+        assert p.risk == pytest.approx(t["risk"], rel=1e-9), p.id
+        assert [f.label.model_dump() for f in p.factors] == [f["label"] for f in t["factors"]], p.id
+        assert [f.rr for f in p.factors] == pytest.approx([f["rr"] for f in t["factors"]])
+
+
 def family(**kw) -> FamilyInput:
     p = lambda age, **x: {"age": age, **x}  # noqa: E731
     return FamilyInput(name="T", clinician="Dr. T", dueDate="2027-01-01", consent=True,

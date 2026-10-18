@@ -414,6 +414,34 @@ p { margin: 6px 0 0; line-height: 1.55; }
 .method { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); background: #f4f7fb; border-radius: 999px; padding: 4px 10px; margin-top: 12px; }
 .model-line { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
+/* Model card */
+.mc-kpis .kpi-val { font-size: 24px; }
+.mc-notes ul { margin: 12px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.mc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.mc-card { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.mc-card h3 { font-size: 14px; margin: 6px 0 4px; }
+.mc-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.mc-table td, .mc-table th { padding: 7px 8px; font-size: 13px; }
+.mc-table tr.mc-ours td { font-weight: 700; color: var(--navy); background: #f4f9fd; }
+.calib { position: relative; margin: 0; }
+.calib svg { width: 100%; height: auto; display: block; overflow: visible; }
+.calib-grid { stroke: var(--line); stroke-width: 1; }
+.calib-diag { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.6; }
+.calib-tick { font-size: 10px; fill: var(--muted); }
+.calib-axis { font-size: 11px; font-weight: 600; fill: var(--muted); }
+.calib-dot { fill: var(--blue); stroke: #fff; stroke-width: 2; transition: r 0.1s; }
+.calib-tip { position: absolute; transform: translate(-50%, calc(-100% - 12px)); background: var(--navy); color: #fff; font-size: 12px; padding: 8px 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; white-space: nowrap; box-shadow: var(--shadow); z-index: 2; }
+.audit-action { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #f4f7fb; color: var(--navy); }
+.audit-login-failed, .audit-login-locked, .audit-delete { background: #fde3e6; color: #b42f3d; }
+.audit-create, .audit-review { background: #e3f6ee; color: #0f7a53; }
+
+@media (max-width: 1100px) {
+  .mc-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .mc-body { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 1100px) {
   .report-grid, .dash-grid, .guide-layout { grid-template-columns: 1fr; }
   .detail { position: static; }

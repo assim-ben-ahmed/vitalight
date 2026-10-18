@@ -1,4 +1,4 @@
-import { BookHeart, LayoutDashboard, LogOut, PlusCircle, Search, Settings, Users } from 'lucide-react'
+import { BookHeart, BrainCircuit, History, LayoutDashboard, LogOut, PlusCircle, Search, Settings, Users } from 'lucide-react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { LangSwitch, useLang } from '../i18n'
 import { useStore } from '../lib/store'
@@ -12,15 +12,17 @@ export default function AppShell() {
   const isParent = pathname.startsWith('/app/parent')
   const { mode, server, user, logout } = useStore()
 
-  if (mode === 'checking') return <div className="login muted">{t.shell.checking}</div>
-  if (!user) return <Login />
-
   const nav = [
     { to: '/app', label: t.shell.dashboard, icon: LayoutDashboard, end: true },
     { to: '/app/families', label: t.shell.families, icon: Users, end: false },
     { to: '/app/new', label: t.shell.newAssessment, icon: PlusCircle, end: false },
     { to: '/app/guide', label: t.shell.guide, icon: BookHeart, end: false },
+    { to: '/app/model', label: t.shell.model, icon: BrainCircuit, end: false },
+    ...(mode === 'online' ? [{ to: '/app/activity', label: t.shell.activity, icon: History, end: false }] : []),
   ]
+
+  if (mode === 'checking') return <div className="login muted">{t.shell.checking}</div>
+  if (!user) return <Login />
 
   return (
     <div className="shell">
@@ -61,7 +63,7 @@ export default function AppShell() {
               <span className="avatar">{user.initials}</span>
               <span className="user-meta">
                 <strong>{user.name}</strong>
-                <small>{user.role || t.shell.role}</small>
+                <small>{user.role ? (t.shell.roles[user.role] ?? user.role) + ' · Maternité Saint-Clair' : t.shell.role}</small>
               </span>
             </div>
             {mode === 'online' && (

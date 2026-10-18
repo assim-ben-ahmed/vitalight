@@ -2,6 +2,7 @@ import { LockKeyhole, LogIn } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Logo } from '../components/ui'
 import { LangSwitch, useLang } from '../i18n'
+import { ApiError } from '../lib/api'
 import { useStore } from '../lib/store'
 
 const DEMO_ACCOUNTS = ['l.moreau@vitalight.demo', 's.haddad@vitalight.demo', 'a.petit@vitalight.demo']
@@ -14,16 +15,16 @@ export default function Login() {
   const [email, setEmail] = useState(DEMO_ACCOUNTS[0])
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<'' | 'error' | 'locked'>('')
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setBusy(true)
-    setError(false)
+    setError('')
     try {
       await login(email, password)
-    } catch {
-      setError(true)
+    } catch (e) {
+      setError(e instanceof ApiError && e.status === 429 ? 'locked' : 'error')
     } finally {
       setBusy(false)
     }
@@ -55,7 +56,7 @@ export default function Login() {
             autoFocus
           />
         </label>
-        {error && <p className="login-error">{a.error}</p>}
+        {error && <p className="login-error">{a[error]}</p>}
         <button className="btn btn-primary" type="submit" disabled={busy}>
           <LogIn size={16} /> {busy ? a.signingIn : a.signIn}
         </button>
